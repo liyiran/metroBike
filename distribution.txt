@@ -1,6 +1,6 @@
 STORY:
 看看站点设计的合不合理
-
+GeoJson： http://bikeshare.metro.net/stations/json/
 
 1. 站点的设置情况
     dot map
