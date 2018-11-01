@@ -7,25 +7,36 @@ GeoJson： http://bikeshare.metro.net/stations/json/
     有多少架子
       目的
       方便客户去哪找车
+      mapbox example: https://bl.ocks.org/shimizu/5f4cee0fddc7a64b55a9
       
 2. //画 yangyueqin
     每个站点借车和还车的量
     interative bar chart
     分区显示前十， 后十
-    按月显示？
+    选择年份
+        目的
+        优化站点的使用率
+        扩建，缩减
     
-    目的
-    优化站点的使用率
-    扩建，缩减
+3. //画 ningxiner
+    站点每月借车量
+    分区前十，后十，（或前五，后五）
+        小日历选择想看的月份
+        按月显示？
+        stack map
+        
+ 4. 每个站点最近一年的使用量比例
+    分区
+    pie chart
+    d3 layouts
+    
 
 //画  yangyueqin
 借车 还车每日时间段
 water fall chart
 往上借 往下还
 
-//画 ningxiner
-站点每月借车量
-stack map
+
 
 //画 ningxiner
 每辆车的使用时间和次数
