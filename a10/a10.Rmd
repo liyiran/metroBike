@@ -1,0 +1,20 @@
+---
+title: "Yiran Li report"
+output:
+  html_notebook: default
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+#Basic plot
+1. Load data from CSV
+```{r}
+library(ggplot2)
+duration_passholder_type_100 = read.csv("duration_passholder_type_100.csv", header = TRUE)
+```
+2. Plot the data
+```{r}
+qplot(duration_passholder_type_100$passholder_type,duration_passholder_type_100$duration,main = "Basic plot for Passholder type against duration",xlab = "pass holder tpye", ylab = "duration")
+```
+#Facets
+
