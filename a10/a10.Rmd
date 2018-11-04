@@ -32,3 +32,34 @@ ggplot(duration_passholder_type_station_name_100, aes(duration_passholder_type_s
   labs(x = "Pass holder type") +
   labs(y = "Duration")
 ```
+#GGMAP
+1. Load the data
+```{r}
+#library(ggmap)
+#source('register_google.R') 
+#register_google(key = "<YOUR_GOOGLE_CLOUD_PLATFORM_API_KEY>")
+#station_data  = geojson_read("station_map_geo_json.json")
+```
+2. Draw stations on the map
+```{r}
+#map.google <- get_map(c(lon=-118.456667, lat=34.010167), zoom = 12)
+#plot(station_data)
+#ggmap(map.google) +
+#  geom_point(data = station_data, aes(x = station_data$features, y = lat, color=alt), alpha = 0.5, shape=1) +
+#  scale_colour_gradient(limits=c(4000, 8000), low="red", high="blue")
+```
+#Interactive graph
+1. load data
+```{r}
+library(plotly)
+duration_passholder_type_100$text = paste('Pass holder type: ',  duration_passholder_type_100$passholder_type, '<br>Duration: ', duration_passholder_type_100$duration)
+g = qplot(
+  passholder_type,
+  duration,
+  data = duration_passholder_type_100,
+  main = "Basic plot for Passholder type against duration",
+  xlab = "pass holder tpye", 
+  ylab = "duration", aes(text = text)) 
+
+ggplotly(g, tooltip = "text")
+```
