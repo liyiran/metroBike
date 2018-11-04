@@ -21,4 +21,14 @@ qplot(duration_passholder_type_100$passholder_type,duration_passholder_type_100$
 ```{r}
 duration_passholder_type_station_name_100 = read.csv("duration_passholder_type_station_name_100.csv", header = TRUE)
 ```
-2
+2. Draw the facets graph
+```{r}
+ggplot(duration_passholder_type_station_name_100, aes(duration_passholder_type_station_name_100$passholder_type, 
+                                                      duration_passholder_type_station_name_100$duration, 
+                                                      color = duration_passholder_type_station_name_100$station_name)) +
+  geom_point() +
+  facet_grid(cols=vars(duration_passholder_type_station_name_100$station_name)) +  
+  theme(legend.position="none",axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(x = "Pass holder type") +
+  labs(y = "Duration")
+```
