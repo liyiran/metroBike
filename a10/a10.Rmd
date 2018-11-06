@@ -7,38 +7,72 @@ output:
   word_document: default
 ---
 #Basic plot
-1. Load data from CSV
+## Load data from CSV
 ```{r}
 library(ggplot2)
-duration_passholder_type_100 = read.csv("duration_passholder_type_100.csv", header = TRUE)
+super_data_set = read.csv("super_data.csv", header = TRUE)
+super_data_set$start_time = as.POSIXct(super_data_set$start_time, format='00%m-%d-%y %H:%M:%S')
 ```
-2. Plot the data
+## Scatterplot
 ```{r}
-qplot(duration_passholder_type_100$passholder_type,duration_passholder_type_100$duration,main = "Basic plot for Passholder type against duration",xlab = "pass holder tpye", ylab = "duration")
+qplot(super_data_set$Region,super_data_set$duration,main = "Basic plot for Region type against Duration",xlab = "region", ylab = "Duration")
+```
+## Text
+```{r}
+ggplot(super_data_set[1:100,], aes(super_data_set[1:100,]$Region, super_data_set[1:100,]$start_time)) + labs(x = "Region") + labs(y = "Start time") + geom_text(aes(label = super_data_set[1:100,]$duration))
+```
+## Bar chart
+```{r}
+ggplot(super_data_set, aes(super_data_set$Region)) + geom_bar()+labs(x = "Region")
+```
+## Line chart
+```{r}
+ggplot(super_data_set, aes(super_data_set$start_time, super_data_set$duration)) + geom_line() +labs(x = "Start time")+labs(y = "Duration")
+```
+## Area chart
+```{r}
+ggplot(super_data_set[1:1000,], aes(super_data_set[1:1000,]$start_time, super_data_set[1:1000,]$duration)) + geom_area() +labs(x = "Start time")+labs(y = "Duration")
+
+```
+## Dot plot
+```{r}
+ggplot(super_data_set, aes(x = super_data_set$duration)) + geom_dotplot(binwidth = 20) +labs(x = "Duration")
+```
+## Histogram
+```{r}
+ggplot(super_data_set, aes(x = super_data_set$start_time)) + geom_histogram(binwidth = 3600) + labs(x = "Start time")
+```
+## Frequency polygon
+```{r}
+ggplot(super_data_set, aes(x = super_data_set$start_time)) + geom_freqpoly(color = "blue")+ labs(x = "Start time")
+```
+##Box plot
+```{r}
+ggplot(super_data_set, aes(super_data_set$passholder_type, super_data_set$start_time)) + geom_boxplot() + labs(x = "Passholder type") + labs(y = "Start time")
+```
+## Violin plot
+```{r}
+ggplot(super_data_set, aes(super_data_set$passholder_type, super_data_set$start_time)) + geom_violin() + labs(x = "Passholder type") + labs(y = "Start time")
 ```
 #Facets
-1. Load data from CSV
 ```{r}
-duration_passholder_type_station_name_100 = read.csv("duration_passholder_type_station_name_100.csv", header = TRUE)
-```
-2. Draw the facets graph
-```{r}
-ggplot(duration_passholder_type_station_name_100, aes(duration_passholder_type_station_name_100$passholder_type, 
-                                                      duration_passholder_type_station_name_100$duration, 
-                                                      color = duration_passholder_type_station_name_100$station_name)) +
+ggplot(super_data_set, aes(super_data_set$passholder_type, 
+                                                      super_data_set$start_time, 
+                                                      color = super_data_set$Region)) +
   geom_point() +
-  facet_grid(cols=vars(duration_passholder_type_station_name_100$station_name)) +  
+  facet_grid(cols=vars(super_data_set$Region)) +  
   theme(legend.position="none",axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(x = "Pass holder type") +
-  labs(y = "Duration")
+  labs(y = "Start time")
 ```
 #GGMAP
 1. Load the data
 ```{r}
-#library(ggmap)
+library(ggmap)
 #source('register_google.R') 
-#register_google(key = "<YOUR_GOOGLE_CLOUD_PLATFORM_API_KEY>")
-#station_data  = geojson_read("station_map_geo_json.json")
+register_google(key = "AIzaSyAfNEsW1TDQ8hGEbnpQsBJWZZEFoxHzZh4")
+googlemap.ca <- get_googlemap(c(-122.796161,37.1931243), zoom = 6)
+ggmap(googlemap.ca)
 ```
 2. Draw stations on the map
 ```{r}
@@ -52,14 +86,14 @@ ggplot(duration_passholder_type_station_name_100, aes(duration_passholder_type_s
 1. load data
 ```{r}
 library(plotly)
-duration_passholder_type_100$text = paste('Pass holder type: ',  duration_passholder_type_100$passholder_type, '<br>Duration: ', duration_passholder_type_100$duration)
-g = qplot(
-  passholder_type,
-  duration,
-  data = duration_passholder_type_100,
-  main = "Basic plot for Passholder type against duration",
-  xlab = "pass holder tpye", 
-  ylab = "duration", aes(text = text)) 
-
-ggplotly(g, tooltip = "text")
+super_data_set$text = paste('Duration: ',  super_data_set$duration, '<br>Region: ', super_data_set$Region)
+#g = qplot(
+ # passholder_type,
+  #duration,
+  #data = duration_passholder_type_100,
+  #main = "Basic plot for Passholder type against duration",
+  #xlab = "pass holder tpye", 
+  #ylab = "duration", aes(text = text)) 
+g = qplot(super_data_set$Region,super_data_set$duration,color=factor(super_data_set$Region),main = "Basic plot for Region type against Duration",xlab = "region", ylab = "Duration",  aes(text = super_data_set$text)) + geom_jitter()
+ggplotly() 
 ```
