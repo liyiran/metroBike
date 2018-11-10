@@ -8,6 +8,7 @@ GeoJson： http://bikeshare.metro.net/stations/json/
       目的
       方便客户去哪找车
       mapbox example: https://bl.ocks.org/shimizu/5f4cee0fddc7a64b55a9
+                    http://deck.gl/showcases/gallery/highway
       
 2. //画 yangyueqin
     每个站点借车和还车的量
