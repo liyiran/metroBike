@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mapbox</title>
+    
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+<body>
+    <div id='map' style='width: 900px; height: 600px;'></div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiaW5mNTU0ZXVyZWthIiwiYSI6ImNqb2JzYzI3ODBld3EzcG80YzNqbTRtMzIifQ.vZla3jmyqwz_Ux7GcmhsCg';
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v10',
+            center: [-118.30, 34.00], // starting position
+            zoom: 10 // starting zoom
+        });
+
+        map.addControl(new mapboxgl.NavigationControl());
+
+    d3.json("stations.json").then(function (json) {
+        var container = map.getCanvasContainer()
+        var svg = d3.select(container).append("svg")
+
+        var projection = d3.geoTransform({point: projectPoint});
+        var path = d3.geoPath().projection(projection);
+        
+        var featureElement = svg.selectAll("circle")
+		.data(json.features)
+		.enter()
+		.append("circle")
+		.attr("transform", function (d) { 
+            var marker = projection([d.properties.longitude, d.properties.latitude]); 
+            return "translate(" + marker[0]+ "," + marker[1] + ")" ;
+        }) 
+        .attr("r", 2)
+        .attr("fill", "red")
+        .attr("opacity", 0.8);
+    
+        //path要素のアップデート
+        function update() {
+            featureElement.attr("d", path);
+        }
+        
+        //
+        map.on("viewreset", update)
+        map.on("movestart", function(){
+            svg.classed("hidden", true);
+        });	
+        map.on("rotate", function(){
+            svg.classed("hidden", true);
+        });	
+        map.on("moveend", function(){
+            update()
+            svg.classed("hidden", false);
+        })
+        
+        //初期レンダリング
+        update()
+            
+        
+        function projectPoint(lon, lat) {
+            var point = map.project(new mapboxgl.LngLat(lon, lat));
+            this.stream.point(point.x, point.y);
+        }
+        
+    });
+
+    </script>
+
+    
+    
+</body>
+
+</html>
