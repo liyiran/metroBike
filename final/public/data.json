@@ -1,0 +1,142 @@
+[
+  {
+    "country_name": "Aruba",
+    "country_code": "ABW",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 58.893
+  },
+  {
+    "country_name": "Afghanistan",
+    "country_code": "AFG",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 72.43
+  },
+  {
+    "country_name": "Angola",
+    "country_code": "AGO",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 54.422
+  },
+  {
+    "country_name": "Albania",
+    "country_code": "ALB",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 40.684
+  },
+  {
+    "country_name": "Andorra",
+    "country_code": "AND",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 15.873
+  },
+  {
+    "country_name": "Arab World",
+    "country_code": "ARB",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 41.63196715
+  },
+  {
+    "country_name": "United Arab Emirates",
+    "country_code": "ARE",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 13.942
+  },
+  {
+    "country_name": "Argentina",
+    "country_code": "ARG",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 7.97
+  },
+  {
+    "country_name": "Armenia",
+    "country_code": "ARM",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 37.533
+  },
+  {
+    "country_name": "American Samoa",
+    "country_code": "ASM",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 12.897
+  },
+  {
+    "country_name": "Antigua and Barbuda",
+    "country_code": "ATG",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 76.953
+  },
+  {
+    "country_name": "Australia",
+    "country_code": "AUS",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 10.317
+  },
+  {
+    "country_name": "Austria",
+    "country_code": "AUT",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 33.89
+  },
+  {
+    "country_name": "Azerbaijan",
+    "country_code": "AZE",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 44.819
+  },
+  {
+    "country_name": "Burundi",
+    "country_code": "BDI",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 87.333
+  },
+  {
+    "country_name": "Belgium",
+    "country_code": "BEL",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 2.066
+  },
+  {
+    "country_name": "Benin",
+    "country_code": "BEN",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 55.153
+  },
+  {
+    "country_name": "Burkina Faso",
+    "country_code": "BFA",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 68.489
+  },
+  {
+    "country_name": "Bangladesh",
+    "country_code": "BGD",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 64.21
+  },
+  {
+    "country_name": "Bulgaria",
+    "country_code": "BGR",
+    "indicator_name": "Rural population (% of total population)",
+    "indicator_code": "SP.RUR.TOTL.ZS",
+    "population": 25.419
+  }
+]
