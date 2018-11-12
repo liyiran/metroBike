@@ -61,14 +61,14 @@
                     .enter().append("circle")
                     .attr("class", "dot")
                     .attr("r", r)
-                    .attr("cx", function (d, i) {
+                    .attr("cx", function (d) {
                         return xScale(d.country_code) + that.left;
                     })
-                    .attr("cy", function (d, i) {
+                    .attr("cy", function (d) {
                         return yScale(d.population) - that.bottom;
                     })
                     .style("fill", "black")
-                    .on("mouseover", function (d) {
+                    .on("mouseover", function () {
                         tooltip.transition()
                             .duration(200)
                             .style("opacity", .9);
@@ -76,7 +76,7 @@
                             .style("left", (d3.event.pageX + 5) + "px")
                             .style("top", (d3.event.pageY - 28) + "px");
                     })
-                    .on("mouseout", function (d) {
+                    .on("mouseout", function () {
                         tooltip.transition()
                             .duration(500)
                             .style("opacity", 0);
