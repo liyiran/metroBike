@@ -108,8 +108,8 @@
                         d.ages = d.ages.sort(function (a, b) {
                             return matchKeys.indexOf(a.name) - matchKeys.indexOf(b.name);
                         });
-                        var y0 = 0;
-                        var aa = d.ages.forEach(function (dd) {
+                        y0 = 0;
+                        d.ages.forEach(function (dd) {
                             dd.y0 = y0;
                             dd.y1 = y0 += +d[dd.name]
                         });
