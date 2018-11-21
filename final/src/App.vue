@@ -1,5 +1,7 @@
 <template>
     <div id="app" class="container">
+        <StartStationHourCount/>
+        <EndStationHourCount/>
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
@@ -10,6 +12,8 @@
 </template>
 
 <script>
+    import EndStationHourCount from './components/EndStationHourCount'
+    import StartStationHourCount from './components/StartStationHourCount'
     import BorrowReturnBarChart from './components/BorrowReturnBarChart'
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
     import StationDotMap from './components/StationDotMap'
@@ -19,6 +23,8 @@
     export default {
         name: 'app',
         components: {
+            StartStationHourCount,
+            EndStationHourCount,
             // BorrowReturnBarChart,
             // BorrowReturnStackMap,
             // StationDotMap,
