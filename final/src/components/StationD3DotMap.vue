@@ -70,34 +70,14 @@
                                     .style("opacity", 0);
                             });
                     });
-                    d3.json("./bus-stops.geojson").then(function (data) {
-                        var div = d3.select("body").append("div")
-                            .attr("class", "tooltip")
-                            .style("opacity", 0);
-                        svg.selectAll(".station")
+                    d3.json("./bus-line.geojson").then(function (data) {
+                        svg.selectAll(".line")
                             .data(data.features)
                             .enter()
-                            .append("circle")
-                            .attr("transform", function (d) {
-                                var marker = projection([d.properties.LONG, d.properties.LAT]);
-                                return "translate(" + marker[0] + "," + marker[1] + ")";
-                            })
-                            .attr("r", 2)
-                            .attr("fill", "green")
-                            .attr("opacity", 0.8)
-                            .on("mouseover", function (d) {
-                                div.transition()
-                                    .duration(200)
-                                    .style("opacity", .9);
-                                div.html(d.properties.name)
-                                    .style("left", (d3.event.pageX) + "px")
-                                    .style("top", (d3.event.pageY) + "px");
-                            })
-                            .on("mouseout", function (d) {
-                                div.transition()
-                                    .duration(500)
-                                    .style("opacity", 0);
-                            });
+                            .append("path")
+                            .attr("d", path)  //generate geographic path
+                            .attr("fill", "white")
+                            .attr("stroke", "blue")
                     });
 
                 });
