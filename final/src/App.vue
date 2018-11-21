@@ -3,7 +3,8 @@
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
-        <StationDotMap/>
+        <TestComponent1/>
+        <TestComponent2/>
         <!--<UsagePieChart/>-->
     </div>
 </template>
@@ -13,14 +14,17 @@
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
     import StationDotMap from './components/StationDotMap'
     import UsagePieChart from './components/UsagePieChart'
-
+    import TestComponent1 from './components/TestComponent1'
+    import TestComponent2 from './components/TestComponent2'
     export default {
         name: 'app',
         components: {
-            BorrowReturnBarChart,
-            BorrowReturnStackMap,
-            StationDotMap,
-            UsagePieChart
+            // BorrowReturnBarChart,
+            // BorrowReturnStackMap,
+            // StationDotMap,
+            // UsagePieChart
+            TestComponent1,
+            TestComponent2
         }
     }
 </script>
