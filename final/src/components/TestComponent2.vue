@@ -1,15 +1,19 @@
 <template>
-    <div>
-        <h1>第二个部分接收一个event</h1>
-        这里显示传进来的值<p >{{text}}</p>
-    </div>
+    <!--<div class="container-fluid">-->
+        <div class="row">
+            <div class="col">
+                <h1>第二个部分接收一个event</h1>
+                这里显示传进来的值<p>{{text}}</p>
+            </div>
+        </div>
+    <!--</div>-->
 </template>
 
 <script>
     export default {
         name: "TestComponent2",
         data: function () {
-           return {text:"undefined"} 
+            return {text: "undefined"}
         },
         methods: {
             changeLeader(value) {
@@ -18,7 +22,7 @@
             }
         },
         mounted() {
-            this.$root.$on('change-leader', (newLeader) => {
+            this.$root.$on('change-station', (newLeader) => {
                 this.changeLeader(newLeader);
             })
         }

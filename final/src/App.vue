@@ -1,11 +1,12 @@
 <template>
     <div id="app" class="container">
-        <StartStationHourCount/>
-        <EndStationHourCount/>
+        <!--<StartStationHourCount/>-->
+        <!--<EndStationHourCount/>-->
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
-        <TestComponent1/>
+        <!--<TestComponent1/>-->
+        <StationMapBox/>
         <TestComponent2/>
         <!--<UsagePieChart/>-->
     </div>
@@ -16,7 +17,7 @@
     import StartStationHourCount from './components/StartStationHourCount'
     import BorrowReturnBarChart from './components/BorrowReturnBarChart'
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
-    import StationDotMap from './components/StationDotMap'
+    import StationMapBox from './components/StationMapBox'
     import UsagePieChart from './components/UsagePieChart'
     import TestComponent1 from './components/TestComponent1'
     import TestComponent2 from './components/TestComponent2'
@@ -27,7 +28,7 @@
             EndStationHourCount,
             // BorrowReturnBarChart,
             // BorrowReturnStackMap,
-            // StationDotMap,
+            StationMapBox,
             // UsagePieChart
             TestComponent1,
             TestComponent2

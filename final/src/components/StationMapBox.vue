@@ -1,27 +1,28 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <div id="wrapper">
-                    <div id='map' style='width: 900px; height: 600px;'></div>
-                </div>
+    <!--<div class="container-fluid">-->
+    <div class="row">
+        <div class="col">
+            <div id="wrapper">
+                <div id='map' style='width: 900px; height: 600px;'></div>
             </div>
         </div>
     </div>
+    <!--</div>-->
 </template>
 <style>
     /*#wrapper {*/
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*padding: 0px;*/
-        /*margin: 0px;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*padding: 0px;*/
+    /*margin: 0px;*/
     /*}*/
     #map {
-        position: absolute;
+        /*position: absolute;*/
         top: 0;
         bottom: 0;
         width: 100%;
     }
+
     #station {
         position: absolute;
         width: 100%;
@@ -46,6 +47,7 @@
                     zoom: 10 // starting zoom
                 });
                 // map.addControl(new mapboxgl.NavigationControl({position: 'top-left'}));
+                var that = this;
                 map.on('load', function () {
                     d3.json("./stations.json").then(function (json) {
                         var container = map.getCanvasContainer();
@@ -56,22 +58,35 @@
                             return map.project(new mapboxgl.LngLat(+d[0], +d[1]));
                         };
                         var circles = svg.selectAll("circle").data(json.features).enter()
-                            .append("circle").attr("class", "dot part").attr("r", 2).attr("cx", function (d) {
+                            .append("circle").attr("class", "dot part").attr("r", 5).attr("cx", function (d) {
                                 return project(d.geometry.coordinates).x
                             }).attr("cy", function (d) {
                                 return project(d.geometry.coordinates).y
-                            }).attr("fill", "red").attr("stroke","black");
+                            }).attr("fill", "red").attr("stroke", "black")
+                            .on("click", function (object) {
+                                console.log(object.properties.kioskId);
+                                that.$root.$emit('change-station', object.properties.kioskId);
+                            }).on("mouseover", function () {
+                                d3.select(this).style("cursor", "pointer");
+                            }).on("mouseout", function () {
+                                d3.select(this).style("cursor", "default");
+                            });
                         // Update on map interaction
                         map.on("viewreset", update);
-                        map.on("move",      update);
-                        map.on("moveend",   update);
+                        map.on("move", update);
+                        map.on("moveend", update);
+
                         function update() {
-                            circles.attr("cx", function(d) { return project(d.geometry.coordinates).x })
-                                .attr("cy", function(d) { return project(d.geometry.coordinates).y });
+                            circles.attr("cx", function (d) {
+                                return project(d.geometry.coordinates).x
+                            })
+                                .attr("cy", function (d) {
+                                    return project(d.geometry.coordinates).y
+                                });
                         }
                     });
                 });
-               
+
             },
         },
         mounted: function () {
