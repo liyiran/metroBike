@@ -1,14 +1,14 @@
 <template>
     <div id="app" class="container">
-        <TestComponent1/>
+        <!--<TestComponent1/>-->
+        <StationMapBox/>
         <StartStationHourCount/>
         <!--<EndStationHourCount/>-->
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
         <!--<TestComponent1/>-->
-        <StationMapBox/>
-        <TestComponent2/>
+        <!--<TestComponent2/>-->
         <!--<UsagePieChart/>-->
     </div>
 </template>
