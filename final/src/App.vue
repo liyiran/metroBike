@@ -1,6 +1,7 @@
 <template>
     <div id="app" class="container">
-        <!--<StartStationHourCount/>-->
+        <TestComponent1/>
+        <StartStationHourCount/>
         <!--<EndStationHourCount/>-->
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->

@@ -32,7 +32,7 @@
             };
         },
         methods: {
-            draw_bar_chart(d) {
+            draw_bar_chart(d, newStation) {
                 let that = this;
                 
                 // Make x scale
@@ -136,32 +136,35 @@
                 };
 
                 // Handler for dropdown value change
-                var dropdownChange = function(){
-                    var newStation = d3.select(this).property('value'),
-                        newData = d[newStation];
-                    updateBars(newData);
-                };
+                 //var dropdownChange = function(newStation){
+                //     // var newStation = d3.select(this).property('value'),
+                //     //     newData = d[newStation];
+                     console.log(newStation);
+                    var newData = d[newStation];
+                     updateBars(newData);
+                 //};
 
                 // Get names of cereals, for dropdown
-                var stations = Object.keys(d).sort();
-                var dropdown = d3.select("#chart")
-                    .insert("select", "svg")
-                    .on("change", dropdownChange);
+                // var stations = Object.keys(d).sort();
+                //  var dropdown = d3.select("#chart")
+                //      .insert("select", "svg")
+                //      .on("change", dropdownChange);
+                //
+                // dropdown.selectAll("option")
+                //     .data(stations)
+                //     .enter()
+                //     .append("option")
+                //     .attr("value", function(d){return d;})
+                //     .text(function(d){
+                //         return d[0].toUpperCase() + d.slice(1, d.length); // capitalize 1st letter
+                //     });
 
-                dropdown.selectAll("option")
-                    .data(stations)
-                    .enter()
-                    .append("option")
-                    .attr("value", function(d){return d;})
-                    .text(function(d){
-                        return d[0].toUpperCase() + d.slice(1, d.length); // capitalize 1st letter
-                    });
-
-                var initialData = d[stations[0]];
-                updateBars(initialData);
+                //var initialData = d[stations[0]];
+                //updateBars(initialData);
 
             },
-            createChart() {
+
+            createChart(newStation) {
                 var fileName = "./pivot_hour_count.csv";
                 
                 let that = this;
@@ -177,7 +180,7 @@
                     });
                     console.log(stationData);
 
-                    that.draw_bar_chart(stationData);
+                    that.draw_bar_chart(stationData, newStation);
                  });
             },
             
@@ -185,7 +188,12 @@
         },
 
         mounted: function () {
-            this.createChart();  
+            // this.createChart();
+            this.$root.$on('change-station', (newStation) => {
+                console.log(newStation);
+                //this.changeStation(newStation);
+                this.createChart(newStation);
+            })
         }
     }
 </script>

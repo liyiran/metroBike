@@ -15,16 +15,16 @@
                 core:{},
                 cores: [
                     {
-                        key: 'xijinping',
+                        key: '3005',
                         display: '包子'
                     }, {
-                        key: 'hujintao',
+                        key: '3006',
                         display: '涛哥'
                     }, {
-                        key: 'jiangzemin',
+                        key: '3007',
                         display: '长者'
                     }, {
-                        key: 'dengxiaoping',
+                        key: '3007',
                         display: '设计师'
                     }
                 ]
@@ -33,7 +33,7 @@
         methods: {
             biantian() {
                 console.log(this.core);
-                this.$root.$emit('change-leader', this.core);
+                this.$root.$emit('change-station', this.core);
             }
         }
     }
