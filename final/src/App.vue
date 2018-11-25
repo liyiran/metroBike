@@ -1,26 +1,38 @@
 <template>
     <div id="app" class="container">
+        <!--<TestComponent1/>-->
+        <StationMapBox/>
+        <StartStationHourCount/>
+        <!--<EndStationHourCount/>-->
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
-        <StationDotMap/>
+        <!--<TestComponent1/>-->
+        <!--<TestComponent2/>-->
         <!--<UsagePieChart/>-->
     </div>
 </template>
 
 <script>
+    import EndStationHourCount from './components/EndStationHourCount'
+    import StartStationHourCount from './components/StartStationHourCount'
     import BorrowReturnBarChart from './components/BorrowReturnBarChart'
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
-    import StationDotMap from './components/StationDotMap'
+    import StationMapBox from './components/StationMapBox'
     import UsagePieChart from './components/UsagePieChart'
-
+    import TestComponent1 from './components/TestComponent1'
+    import TestComponent2 from './components/TestComponent2'
     export default {
         name: 'app',
         components: {
-            BorrowReturnBarChart,
-            BorrowReturnStackMap,
-            StationDotMap,
-            UsagePieChart
+            StartStationHourCount,
+            EndStationHourCount,
+            // BorrowReturnBarChart,
+            // BorrowReturnStackMap,
+            StationMapBox,
+            // UsagePieChart
+            TestComponent1,
+            TestComponent2
         }
     }
 </script>
