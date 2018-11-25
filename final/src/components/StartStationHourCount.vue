@@ -94,20 +94,20 @@
                     })
                     .on("mouseover", function () {
                         d3.select(this).attr("fill", "red");
-                        // tooltip.style("display", null);
+                        tooltip.style("display", null);
                     })
                     .on("mouseout", function () {
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
                             .attr("fill", "lightBlue");
-                        // tooltip.style("display", "none");
+                        tooltip.style("display", "none");
                     })
                     .on("mousemove", function (d) {
                         var xPosition = d3.mouse(this)[0] - 15;
                         var yPosition = d3.mouse(this)[1] - 25;
-                        // tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-                        // tooltip.select("text").text(d);
+                        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                        tooltip.select("text").text(d);
                     })
                     .attr("fill", "lightBlue");
                     // Update old ones, already have x / width from before
@@ -122,22 +122,22 @@
                     // Remove old ones
                     bars.exit().remove();
                 // Prep the tooltip bits, initial display is hidden
-                // var tooltip = canvas.append("g")
-                //     .attr("class", "info")
-                //     .style("display", "none");
-                //    
-                // tooltip.append("rect")
-                //     .attr("width", 30)
-                //     .attr("height", 20)
-                //     .attr("fill", "white")
-                //     .style("opacity", 0.5);
-                //
-                // tooltip.append("text")
-                //     .attr("x", 15)
-                //     .attr("dy", "1.2em")
-                //     .style("text-anchor", "middle")
-                //     .attr("font-size", "12px")
-                //     .attr("font-weight", "bold");
+                var tooltip = canvas.append("g")
+                    .attr("class", "info")
+                    .style("display", "none");
+
+                tooltip.append("rect")
+                    .attr("width", 30)
+                    .attr("height", 20)
+                    .attr("fill", "white")
+                    .style("opacity", 0.5);
+
+                tooltip.append("text")
+                    .attr("x", 15)
+                    .attr("dy", "1.2em")
+                    .style("text-anchor", "middle")
+                    .attr("font-size", "12px")
+                    .attr("font-weight", "bold");
                 // // Handler for dropdown value change
             }
         },

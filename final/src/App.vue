@@ -3,7 +3,7 @@
         <!--<TestComponent1/>-->
         <StationMapBox/>
         <StartStationHourCount/>
-        <!--<EndStationHourCount/>-->
+        <EndStationHourCount/>
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
