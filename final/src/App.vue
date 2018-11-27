@@ -4,6 +4,7 @@
         <StationMapBox/>
         <StartStationHourCount/>
         <EndStationHourCount/>
+        <DiffWaterfallChart/>
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
@@ -16,6 +17,7 @@
 <script>
     import EndStationHourCount from './components/EndStationHourCount'
     import StartStationHourCount from './components/StartStationHourCount'
+    import DiffWaterfallChart from './components/DiffWaterfallChart'
     import BorrowReturnBarChart from './components/BorrowReturnBarChart'
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
     import StationMapBox from './components/StationMapBox'
@@ -27,6 +29,7 @@
         components: {
             StartStationHourCount,
             EndStationHourCount,
+            DiffWaterfallChart,
             // BorrowReturnBarChart,
             // BorrowReturnStackMap,
             StationMapBox,

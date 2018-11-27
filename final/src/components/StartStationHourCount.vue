@@ -22,6 +22,7 @@
                 bottom: 30,
                 left: 40
             };
+            var colorScale = d3.scaleSequential(d3.interpolateYlGnBu);
             var width = 1000 - margin.left - margin.right;
             var height = 600 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(hourFields).rangeRound([0, width]).padding(0.1);
@@ -31,6 +32,7 @@
             return {
                 hourFields: hourFields,
                 margin: margin,
+                colorScale:colorScale,
                 width: width,
                 height: height,
                 xScale: xScale,
@@ -74,6 +76,7 @@
                 var that = this;
                 //First update the y-axis domain to match data
                 this.yScale.domain(d3.extent(d));
+                this.colorScale.domain(d3.extent(d));
                 console.log(d3.extent(d));
                 yAxisHandleForUpdate.call(this.yAxis);
                 var bars = canvas.selectAll(".bar").data(d);
@@ -100,7 +103,10 @@
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
-                            .attr("fill", "lightBlue");
+                            .attr("fill", function(d){
+
+                                return that.colorScale(d);
+                            })
                         tooltip.style("display", "none");
                     })
                     .on("mousemove", function (d) {
@@ -109,7 +115,10 @@
                         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                         tooltip.select("text").text(d);
                     })
-                    .attr("fill", "lightBlue");
+                    .attr("fill", function(d){
+
+                        return that.colorScale(d);
+                    });
                     // Update old ones, already have x / width from before
                     bars.transition()
                         .delay(1500)
@@ -151,6 +160,7 @@
                     stationData[station] = [];
                     //please avoid such deep function. use two fow loop
                     that.hourFields.forEach(function (field) {
+
                         stationData[station].push(+d[field]);
                     });
                 });
