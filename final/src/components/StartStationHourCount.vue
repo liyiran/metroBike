@@ -1,7 +1,9 @@
 <template>
     <div>
         <h3>Count By Hour For Each Start Station</h3>
-        <div class="container" id="chart"></div>
+        <div class="container-fluid">
+            <div class="row"><div class="col-12" id="chart"><svg id="StartStationHourCount"></svg></div> </div>
+        </div>
     </div>
 </template>
 <!--https://medium.com/tyrone-tudehope/composing-d3-visualizations-with-vue-js-c65084ccb686-->
@@ -32,25 +34,22 @@
             return {
                 hourFields: hourFields,
                 margin: margin,
-                colorScale:colorScale,
+                colorScale: colorScale,
                 width: width,
                 height: height,
                 xScale: xScale,
                 yScale: yScale,
                 xAxis: xAxis,
                 yAxis: yAxis,
-                // yAxisHandleForUpdate: yAxisHandleForUpdate,
-                // canvas:canvas
             }
         },
         methods: {
             initChart(stationData) {
                 // console.log(stationData);
-                var canvas = d3.select("#chart")
-                    .append("svg")
+                var canvas = d3.select("#StartStationHourCount")
                     .attr("width", this.width + this.margin.left + this.margin.right)
                     .attr("height", this.height + this.margin.top + this.margin.bottom)
-                    .append("g")
+                    .append("g").attr("id", 'StartStationHourCount')
                     .attr("transform", "translate(" + this.margin.left + ", " + this.margin.top + ")");
                 canvas.append("g")
                     .attr("class", "axis axis--x")
@@ -68,8 +67,7 @@
                 var that = this;
                 this.$root.$on('change-station', (newStation) => {
                     console.log(newStation);
-                    //this.changeStation(newStation);
-                    that.updateChart(stationData[newStation],yAxisHandleForUpdate,canvas);
+                    that.updateChart(stationData[newStation], yAxisHandleForUpdate, canvas);
                 })
             },
             updateChart(d, yAxisHandleForUpdate, canvas) {
@@ -103,10 +101,10 @@
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
-                            .attr("fill", function(d){
+                            .attr("fill", function (d) {
 
                                 return that.colorScale(d);
-                            })
+                            });
                         tooltip.style("display", "none");
                     })
                     .on("mousemove", function (d) {
@@ -115,21 +113,21 @@
                         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                         tooltip.select("text").text(d);
                     })
-                    .attr("fill", function(d){
+                    .attr("fill", function (d) {
 
                         return that.colorScale(d);
                     });
-                    // Update old ones, already have x / width from before
-                    bars.transition()
-                        .delay(1500)
-                        .attr("y", function (d) {
-                            return that.yScale(d);
-                        })
-                        .attr("height", function (d) {
-                            return that.height - that.yScale(d);
-                        });
-                    // Remove old ones
-                    bars.exit().remove();
+                // Update old ones, already have x / width from before
+                bars.transition()
+                    .delay(1500)
+                    .attr("y", function (d) {
+                        return that.yScale(d);
+                    })
+                    .attr("height", function (d) {
+                        return that.height - that.yScale(d);
+                    });
+                // Remove old ones
+                bars.exit().remove();
                 // Prep the tooltip bits, initial display is hidden
                 var tooltip = canvas.append("g")
                     .attr("class", "info")
@@ -148,6 +146,18 @@
                     .attr("font-size", "12px")
                     .attr("font-weight", "bold");
                 // // Handler for dropdown value change
+            },
+            onResize(event) {
+                var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
+                console.log(d3.select('#chart').property('clientWidth'));
+                this.xScale.range([0, width]);
+                var graph = d3.select('#StartStationHourCount');
+                graph.attr('width', width);
+                graph.select('.axis--x')
+                    .attr('transform', 'translate(0,' + this.height + ')')
+                    .call(this.xAxis);
+                graph.select('.xLabel')
+                    .attr('x', width / 2)
             }
         },
 
@@ -160,11 +170,11 @@
                     stationData[station] = [];
                     //please avoid such deep function. use two fow loop
                     that.hourFields.forEach(function (field) {
-
                         stationData[station].push(+d[field]);
                     });
                 });
                 that.initChart(stationData);
+                window.addEventListener('resize', that.onResize);
             });
 
         }
