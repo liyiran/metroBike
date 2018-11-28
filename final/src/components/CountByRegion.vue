@@ -23,13 +23,13 @@
             </div>
         </div>
         <div class="row align-items-center">
-            <div class="col-sm-8">
+            <div class="col-sm-8" id="container">
                 <div style="min-height: 600px !important;">
                     <svg id="pie"></svg>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="card" style="width: 20rem;">
+                <div class="card" >
                     <div class="card-body">
                         <h4 id="pie-card-name" class="card-title">Monthly Bike Usage</h4>
                         <h6 class="card-subtitle mb-2 text-muted">The Average Amount of Metro Bike Used in Regions in Each Month</h6>
@@ -72,8 +72,8 @@
                     console.log(data);
 
 
-                    var diameter = parseInt(d3.select('.col-sm-8').property('clientWidth')),
-                        radiusOver = diameter / 2 -100,
+                    var diameter = parseInt(d3.select('#container').property('clientWidth')),
+                        radiusOver = diameter / 2 -50,
                         radius = radiusOver - 30;
 
                     var svg = d3.select("#pie")
@@ -174,6 +174,11 @@
         },
         mounted: function () {
             this.initChart();
+            var that = this;
+            window.addEventListener('resize', function () {
+                d3.select("#pie").selectAll("*").remove();
+                that.initChart(); 
+            });
         }
     }
 </script>
