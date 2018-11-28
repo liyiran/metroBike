@@ -1,5 +1,27 @@
 <template>
     <div class="container">
+        <div class="row">
+            <div class="col">
+                <select v-on:change="onChange" id="select">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>                 
+                    <option value="4">01</option>
+                    <option value="5">11</option>
+                    <option value="6">21</option>
+                    <option value="7">31</option>                 
+                    <option value="8">02</option>
+                    <option value="9">12</option>
+                    <option value="10">22</option>
+                    <option value="11">32</option>                 
+                    <option value="12">03</option>
+                    <option value="13">13</option>
+                    <option value="14">23</option>
+                    <option value="15">33</option>
+                </select>
+            </div>
+        </div>
         <div class="row align-items-center">
             <div class="col-sm-8">
                 <div style="min-height: 600px !important;">
@@ -29,10 +51,13 @@
         name: "countByRegion",
 
         methods: {
+            onChange() {
+                d3.select("#pie").selectAll("*").remove();
+                this.initChart();
+            },
             initChart() {
-                console.log("hello")
                 d3.json("./countMonthRegion.json").then(function (dataset) {
-                    console.log(dataset)
+                    console.log(dataset);
 
                     var region = dataset.map(function (d) {
                         return d.region
@@ -40,22 +65,23 @@
                     var color = d3.scaleOrdinal()
                         .domain(region)
                         .range(d3.schemeCategory10);
+                    var sel = document.getElementById('select');
+                    var value = sel.options[sel.selectedIndex].value
+                    console.log(value);
+                    var data = dataset[value].count;
+                    console.log(data);
 
-                    var data = dataset[22].count
-                    console.log(data)
 
-                    // // var formatComma = d3.format(",");
+                    var diameter = parseInt(d3.select('.col-sm-8').property('clientWidth')),
+                        radiusOver = diameter / 2 -100,
+                        radius = radiusOver - 30;
 
-                var diameter = parseInt(d3.select('.col-sm-8').property('clientWidth')),
-                    radiusOver = diameter / 2,
-                    radius = radiusOver - 30;
-    
-                var svg = d3.select("#pie")
-                    .attr("width", diameter)
-                    .attr("height", diameter)
-                    .attr("class", "pie");
-                
-                var g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+                    var svg = d3.select("#pie")
+                        .attr("width", diameter)
+                        .attr("height", diameter)
+                        .attr("class", "pie");
+
+                    var g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
                     var pie = d3.pie()  //pie generator
                         .value(function (d) {
@@ -104,9 +130,10 @@
                         .text(function (d) {
                             return d.data.region;
                         });
-
+                    var sel = document.getElementById('select');
+                    var text = sel.options[sel.selectedIndex].text
                     slice.on("mouseover", function (d) {
-                        d3.select('#pie-card-name').html(d.data.region);
+                        d3.select('#pie-card-name').html(d.data.region + "for month "+text);
                         d3.select('#pie-card-desc').html(d.data.average + ' bikes<br/>');
                         d3.selectAll('.slice')
                             .style('opacity', 0.5);
@@ -114,7 +141,7 @@
                             .duration(300)
                             .attr("d", pathOver)
                             .style('opacity', 1);
-
+                      
                         d3.selectAll("." + d.data.region).selectAll('.text')
                             .transition()
                             .duration(300)
