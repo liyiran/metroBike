@@ -244,7 +244,6 @@
                     
                     d3.select(window).on('resize', resize);
                     // window.addEventListener('resize', resize);
-  
                     resize();
                 })
             }
