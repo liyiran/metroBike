@@ -6,7 +6,6 @@
         </div>
     </div>
 </template>
-<!--https://medium.com/tyrone-tudehope/composing-d3-visualizations-with-vue-js-c65084ccb686-->
 
 <script>
     import * as d3 from 'd3';

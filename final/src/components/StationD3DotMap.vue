@@ -1,23 +1,18 @@
 <template>
-    <div class="container-fluid">
+    <div>
+        <h3>Dot map using D3</h3>
         <div class="row">
             <div class="col">
-                <svg class="mx-auto d-block" id="ca" width="1000" height="1000"></svg>
+                <svg class="mx-auto d-block" id="ca" width="900" height="600"></svg>
             </div>
         </div>
     </div>
 </template>
-
 <script>
-
     import * as d3 from 'd3';
 
     export default {
         name: "StationD3DotMap",
-        // data() {
-        //    
-        //     return {svg: svg, width: width, height: height};
-        // },
         methods: {
             draw() {
                 var that = this;
