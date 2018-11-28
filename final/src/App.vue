@@ -6,6 +6,7 @@
         <EndStationHourCount/>
         <DiffWaterfallChart/>
         <countByRegion/>
+        <AverageMonthLineChart/>
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
@@ -26,6 +27,7 @@
     import TestComponent1 from './components/TestComponent1'
     import TestComponent2 from './components/TestComponent2'
     import countByRegion from './components/countByRegion'
+    import AverageMonthLineChart from './components/AverageMonthLineChart'
 
     export default {
         name: 'app',
@@ -39,7 +41,8 @@
             // UsagePieChart
             TestComponent1,
             TestComponent2,
-            countByRegion
+            countByRegion,
+            AverageMonthLineChart
         }
     }
 </script>
