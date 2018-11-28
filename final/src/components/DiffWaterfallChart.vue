@@ -7,7 +7,7 @@
 
 <script>
     import * as d3 from 'd3';
-    import {rgb} from "d3";
+
     export default {
         name: "DiffWaterfallChart",
         data: function () {
@@ -32,7 +32,7 @@
             return {
                 dayFields: dayFields,
                 margin: margin,
-                colorScale:colorScale,
+                colorScale: colorScale,
                 width: width,
                 height: height,
                 xScale: xScale,
@@ -77,28 +77,38 @@
                 this.$root.$on('change-station', (newStation) => {
                     console.log(newStation);
                     //this.changeStation(newStation);
-                    that.updateChart(stationData[newStation],yAxisHandleForUpdate,svg);
+                    that.updateChart(stationData[newStation], yAxisHandleForUpdate, svg);
                 })
             },
             updateChart(d, yAxisHandleForUpdate, svg) {
                 var that = this;
                 //this.x.domain(this.dayFields);
                 //First update the y-axis domain to match data
-                this.yScale.domain(d3.extent(d));
+                if(d3.min(d) > 0) {
+                    this.yScale.domain([0,d3.max(d)]);
+                } else if(d3.max(d)<0) {
+                    this.yScale.domain([d3.min(d),0]); 
+                } else {
+                    this.yScale.domain(d3.extent(d));
+                }
+                
                 var abs;
-                if(Math.abs(d3.extent(d)[0]) > Math.abs(d3.extent(d)[1])){
+                console.log(this.yScale.domain());
+                if (Math.abs(d3.extent(d)[0]) > Math.abs(d3.extent(d)[1])) {
                     abs = Math.abs(d3.extent(d)[0]);
-                } else { abs = Math.abs(d3.extent(d)[1]);}
+                } else {
+                    abs = Math.abs(d3.extent(d)[1]);
+                }
                 console.log(abs);
-                this.colorScale.domain([-abs,abs]);
+                this.colorScale.domain([-abs, abs]);
                 console.log(d3.extent(d));
                 yAxisHandleForUpdate.call(this.yAxis);
                 var bars = svg.selectAll(".bar").data(d);
                 // Add bars for new data
                 bars.enter()
                     .append("rect")
-                    .attr("class", function(d){
-                        if(d < 0){
+                    .attr("class", function (d) {
+                        if (d < 0) {
                             return "bar negative";
                         } else {
                             return "bar positive";
@@ -109,7 +119,7 @@
                         return that.xScale(that.dayFields[i]);
                     })
                     .attr("y", function (d) {
-                        if(d < 0){
+                        if (d < 0) {
                             return that.yScale(0);
                         } else {
                             return that.yScale(d);
@@ -118,7 +128,7 @@
                     .attr("width", this.xScale.bandwidth())
                     .attr("height", function (d) {
                         // return that.height - that.yScale(d);
-                        return Math.abs(that.yScale(d)-that.yScale(0));
+                        return Math.abs(that.yScale(d) - that.yScale(0));
                     })
                     .on("mouseover", function () {
                         d3.select(this).attr("fill", "red");
@@ -128,16 +138,16 @@
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
-                            .attr("fill", function(d){
+                            .attr("fill", function (d) {
                                 return that.colorScale(d);
                             })
-                            // .attr("fill", function(d){
-                            //     if(d<0){
-                            //         return rgb(222,238,0);
-                            //     } else {
-                            //         return rgb(65,220,49);
-                            //     }
-                            // });
+                        // .attr("fill", function(d){
+                        //     if(d<0){
+                        //         return rgb(222,238,0);
+                        //     } else {
+                        //         return rgb(65,220,49);
+                        //     }
+                        // });
                         tooltip.style("display", "none");
                     })
                     .on("mousemove", function (d) {
@@ -146,29 +156,29 @@
                         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                         tooltip.select("text").text(d);
                     })
-                    .attr("fill", function(d){
-                        console.log(that.colorScale(d));
+                    .attr("fill", function (d) {
+                        // console.log(that.colorScale(d));
                         return that.colorScale(d);
                     });
-                    // .attr("fill", function(d){
-                    //     if(d<0){
-                    //         return rgb(222,238,0);
-                    //     } else {
-                    //         return rgb(65,220,49);
-                    //     }
-                    // });
+                // .attr("fill", function(d){
+                //     if(d<0){
+                //         return rgb(222,238,0);
+                //     } else {
+                //         return rgb(65,220,49);
+                //     }
+                // });
                 // Update old ones, already have x / width from before
                 bars.transition()
                     .delay(1500)
-                    .attr("y",  function (d) {
-                        if(d < 0){
+                    .attr("y", function (d) {
+                        if (d < 0) {
                             return that.yScale(0);
                         } else {
                             return that.yScale(d);
                         }
                     })
                     .attr("height", function (d) {
-                        return Math.abs(that.yScale(d)-that.yScale(0));
+                        return Math.abs(that.yScale(d) - that.yScale(0));
                     });
                 // Remove old ones
                 bars.exit().remove();
