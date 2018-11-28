@@ -1,7 +1,9 @@
 <template>
     <div>
         <h3>Count By Hour For Each Return Station</h3>
-        <div class="container" id="chart2"></div>
+        <div class="container-fluid">
+            <div class="row"><div class="col-12" id="chart"><svg id="EndStationHourCount"></svg></div> </div>
+        </div>
     </div>
 </template>
 <!--https://medium.com/tyrone-tudehope/composing-d3-visualizations-with-vue-js-c65084ccb686-->
@@ -39,18 +41,16 @@
                 yScale: yScale,
                 xAxis: xAxis,
                 yAxis: yAxis,
-                // yAxisHandleForUpdate: yAxisHandleForUpdate,
-                // canvas:canvas
+                current:[]
             }
         },
         methods: {
             initChart(stationData) {
                 // console.log(stationData);
-                var canvas = d3.select("#chart2")
-                    .append("svg")
+                var canvas = d3.select("#EndStationHourCount")
                     .attr("width", this.width + this.margin.left + this.margin.right)
                     .attr("height", this.height + this.margin.top + this.margin.bottom)
-                    .append("g")
+                    .append("g").attr("id", 'EndStationHourCount')
                     .attr("transform", "translate(" + this.margin.left + ", " + this.margin.top + ")");
                 canvas.append("g")
                     .attr("class", "axis axis--x")
@@ -68,15 +68,14 @@
                 var that = this;
                 this.$root.$on('change-station', (newStation) => {
                     console.log(newStation);
-                    //this.changeStation(newStation);
                     that.updateChart(stationData[newStation],yAxisHandleForUpdate,canvas);
                 })
             },
             updateChart(d, yAxisHandleForUpdate, canvas) {
                 var that = this;
+                this.current = d;
                 //First update the y-axis domain to match data
                 this.yScale.domain(d3.extent(d));
-                console.log(d3.extent(d));
                 this.colorScale.domain(d3.extent(d));
                 yAxisHandleForUpdate.call(this.yAxis);
                 var bars = canvas.selectAll(".bar").data(d);
@@ -104,7 +103,6 @@
                             .transition("colorfade")
                             .duration(250)
                             .attr("fill", function(d){
-
                                 return that.colorScale(d);
                             });
                         tooltip.style("display", "none");
@@ -148,6 +146,25 @@
                     .attr("font-size", "12px")
                     .attr("font-weight", "bold");
                 // // Handler for dropdown value change
+            },
+            onResize(event){
+                var that = this;
+                var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
+                console.log(d3.select('#chart').property('clientWidth'));
+                this.xScale.range([0, width]);
+                var graph = d3.select('#EndStationHourCount');
+                graph.attr('width', width + 50);
+                graph.select('.axis--x')
+                    .attr('transform', 'translate(0,' + this.height + ')')
+                    .call(this.xAxis);
+                graph.select('.xLabel')
+                    .attr('x', width/2);
+                graph.selectAll('.bar')
+                    .data(this.current)
+                    .attr('class', 'bar')
+                    .attr('x', function(d,i){ return that.xScale(that.hourFields[i]); })
+                    .attr('y', function(d){ return that.yScale(d); })
+                    .attr('width', this.xScale.bandwidth());
             }
         },
 
@@ -164,6 +181,7 @@
                     });
                 });
                 that.initChart(stationData);
+                window.addEventListener('resize', that.onResize);
             });
 
         }
