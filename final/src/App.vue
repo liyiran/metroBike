@@ -1,18 +1,15 @@
 <template>
     <div id="app" class="container-fluid">
         <!--<TestComponent1/>-->
+
         <StationMapBox/>
         <StartStationHourCount/>
         <EndStationHourCount/>
         <DiffWaterfallChart/>
         <countByRegion/>
         <AverageMonthLineChart/>
-        <!--<img src="./assets/logo.jpg"/>-->
-        <!--<BorrowReturnBarChart/>-->
-        <!--<BorrowReturnStackMap/>-->
-        <!--<TestComponent1/>-->
-        <!--<TestComponent2/>-->
-        <!--<UsagePieChart/>-->
+
+        <CountByRegion/>
     </div>
 </template>
 
@@ -26,9 +23,8 @@
     import UsagePieChart from './components/UsagePieChart'
     import TestComponent1 from './components/TestComponent1'
     import TestComponent2 from './components/TestComponent2'
-    import countByRegion from './components/countByRegion'
     import AverageMonthLineChart from './components/AverageMonthLineChart'
-
+    import CountByRegion from './components/CountByRegion'
     export default {
         name: 'app',
         components: {
@@ -38,11 +34,11 @@
             // BorrowReturnBarChart,
             // BorrowReturnStackMap,
             StationMapBox,
-            // UsagePieChart
-            TestComponent1,
-            TestComponent2,
-            countByRegion,
-            AverageMonthLineChart
+
+            AverageMonthLineChart,
+
+            CountByRegion
+
         }
     }
 </script>
