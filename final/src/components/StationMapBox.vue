@@ -88,9 +88,19 @@
                 });
 
             },
+            onResize(event) {
+                console.log('window has been resized', event);
+                // d3.select("#station").attr("width", event.target.outerWidth - 500);
+                // d3.select(".mapboxgl-canvas").attr("width", event.target.outerWidth - 500);
+                var mapCanvas = document.getElementsByClassName('mapboxgl-canvas')[0];
+                var mapDiv = document.getElementById('map');
+                mapDiv.style.width = '100%';
+                mapCanvas.style.width = '100%';
+            }
         },
         mounted: function () {
             this.drawMap();
+            window.addEventListener('resize', this.onResize)
         }
     }
 </script>
