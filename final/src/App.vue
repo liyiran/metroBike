@@ -31,11 +31,21 @@
         <div class="container">
             <StationMapBox/>
         </div>
-        <StartStationHourCount/>
-        <EndStationHourCount/>
-        <DiffWaterfallChart/>
-        <CountByRegion/>
-        <AverageMonthLineChart/>
+        <div class="container">
+            <StartStationHourCount/>
+        </div>
+        <div class="container">
+            <EndStationHourCount/>
+        </div>
+        <div class="container">
+            <DiffWaterfallChart/>
+        </div>
+        <div class="container">
+            <CountByRegion/>
+        </div>
+        <div class="container">
+            <AverageMonthLineChart/>
+        </div>
     </div>
 </template>
 

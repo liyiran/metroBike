@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Mapbox + D3 svg</h1>
+        <h3>Mapbox + D3 svg</h3>
         <div class="row">
             <div class="col">
                 <div id="wrapper">

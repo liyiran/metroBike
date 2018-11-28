@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Dot map using D3</h1>
+        <h3>Dot map using D3</h3>
         <div class="row">
             <div class="col">
                 <svg class="mx-auto d-block" id="ca" width="900" height="600"></svg>
