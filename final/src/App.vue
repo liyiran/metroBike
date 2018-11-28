@@ -20,7 +20,7 @@
     import StationMapBox from './components/StationMapBox'
     import UsagePieChart from './components/UsagePieChart'
     import AverageMonthLineChart from './components/AverageMonthLineChart'
-    import countByRegion from './components/countByRegion'
+    import CountByRegion from './components/CountByRegion'
     export default {
         name: 'app',
         components: {
@@ -33,7 +33,7 @@
 
             AverageMonthLineChart,
 
-            countByRegion
+            CountByRegion
 
         }
     }
