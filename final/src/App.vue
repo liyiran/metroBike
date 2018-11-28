@@ -1,14 +1,14 @@
 <template>
     <div id="app" class="container-fluid">
         <!--<TestComponent1/>-->
-        <StationMapBox/>
-        <StartStationHourCount/>
-        <EndStationHourCount/>
-        <DiffWaterfallChart/>
+        <!--<StationMapBox/>-->
+        <!--<StartStationHourCount/>-->
+        <!--<EndStationHourCount/>-->
+        <!--<DiffWaterfallChart/>-->
         <!--<img src="./assets/logo.jpg"/>-->
         <!--<BorrowReturnBarChart/>-->
         <!--<BorrowReturnStackMap/>-->
-        <!--<UsagePieChart/>-->
+        <CountByRegion/>
     </div>
 </template>
 
@@ -19,7 +19,7 @@
     import BorrowReturnBarChart from './components/BorrowReturnBarChart'
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
     import StationMapBox from './components/StationMapBox'
-    import UsagePieChart from './components/UsagePieChart'
+    import CountByRegion from './components/CountByRegion'
     export default {
         name: 'app',
         components: {
@@ -29,7 +29,7 @@
             // BorrowReturnBarChart,
             // BorrowReturnStackMap,
             StationMapBox,
-            // UsagePieChart
+            CountByRegion
         }
     }
 </script>
