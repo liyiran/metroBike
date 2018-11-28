@@ -25,8 +25,12 @@
                 <a class="py-2 d-none d-md-inline-block" href="#">CountByRegion</a>
             </div>
         </nav>
-
-        <StationMapBox/>
+        <div class="container">
+            <StationD3DotMap/>
+        </div>
+        <div class="container">
+            <StationMapBox/>
+        </div>
         <StartStationHourCount/>
         <EndStationHourCount/>
         <DiffWaterfallChart/>
@@ -43,7 +47,7 @@
     import StationMapBox from './components/StationMapBox'
     import AverageMonthLineChart from './components/AverageMonthLineChart'
     import CountByRegion from './components/CountByRegion'
-
+    import StationD3DotMap from './components/StationD3DotMap'
     export default {
         name: 'app',
         components: {
@@ -54,7 +58,7 @@
             // BorrowReturnBarChart,
             // BorrowReturnStackMap,
             StationMapBox,
-
+            StationD3DotMap,
             AverageMonthLineChart,
 
             CountByRegion

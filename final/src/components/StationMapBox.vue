@@ -1,28 +1,21 @@
 <template>
-    <!--<div class="container-fluid">-->
-    <div class="row">
-        <div class="col">
-            <div id="wrapper">
-                <div id='map' style='width: 900px; height: 600px;'></div>
+    <div>
+        <h1>Mapbox + D3 svg</h1>
+        <div class="row">
+            <div class="col">
+                <div id="wrapper">
+                    <div id='map' style='width: 900px; height: 600px;'></div>
+                </div>
             </div>
         </div>
     </div>
-    <!--</div>-->
 </template>
 <style>
-    /*#wrapper {*/
-    /*width: 100%;*/
-    /*height: 100%;*/
-    /*padding: 0px;*/
-    /*margin: 0px;*/
-    /*}*/
     #map {
-        /*position: absolute;*/
         top: 0;
         bottom: 0;
         width: 100%;
     }
-
     #station {
         position: absolute;
         width: 100%;
@@ -34,8 +27,6 @@
     import * as d3 from 'd3';
 
     export default {
-        //check this for more help
-        // https://github.com/jorditost/mapboxgl-d3-playground/blob/master/03-map-data-interactions.html
         name: 'StationDotMap',
         methods: {
             drawMap() {
