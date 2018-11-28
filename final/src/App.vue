@@ -9,7 +9,7 @@
         <countByRegion/>
         <AverageMonthLineChart/>
 
-        <CountByRegion/>
+
     </div>
 </template>
 
@@ -21,10 +21,9 @@
     import BorrowReturnStackMap from './components/BorrowReturnStackMap'
     import StationMapBox from './components/StationMapBox'
     import UsagePieChart from './components/UsagePieChart'
-    import TestComponent1 from './components/TestComponent1'
-    import TestComponent2 from './components/TestComponent2'
+
     import AverageMonthLineChart from './components/AverageMonthLineChart'
-    import CountByRegion from './components/CountByRegion'
+    import countByRegion from './components/countByRegion'
     export default {
         name: 'app',
         components: {
@@ -37,7 +36,7 @@
 
             AverageMonthLineChart,
 
-            CountByRegion
+            countByRegion
 
         }
     }

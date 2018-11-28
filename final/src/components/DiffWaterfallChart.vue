@@ -1,7 +1,9 @@
 <template>
     <div>
         <h3>Count Difference for Borrow and Return by Day</h3>
-        <div class="container" id="waterfall"></div>
+        <div class="container-fluid">
+            <div class="row"><div class="col-12" id="chart"><svg id="waterfall"></svg></div> </div>
+        </div>
     </div>
 </template>
 
@@ -25,7 +27,7 @@
             var width = 1000 - margin.left - margin.right;
             var height = 800 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(dayFields).rangeRound([0, width]).padding(0.1);
-            //var x = d3.scaleBand().rangeRound([0,width]).padding(0.1);
+
             var yScale = d3.scaleLinear().rangeRound([height, 0]);
             var xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
             var yAxis = d3.axisLeft(yScale);
@@ -38,32 +40,23 @@
                 xScale: xScale,
                 yScale: yScale,
                 xAxis: xAxis,
-                //x: x,
                 yAxis: yAxis,
-                // yAxisHandleForUpdate: yAxisHandleForUpdate,
-                // canvas:canvas
+                current:[]
             }
         },
         methods: {
             initChart(stationData) {
-                console.log(this.yScale(0));
                 // create svg element;
                 var svg = d3.select("#waterfall")
-                    .append("svg")
                     .attr("width", this.width + this.margin.left + this.margin.right)
                     .attr("height", this.height + this.margin.top + this.margin.bottom)
-                    .append("g")
+                    .append("g").attr("id", 'waterfall')
                     .attr("transform", "translate(" + this.margin.left + ", " + this.margin.top + ")");
                 svg.append("g")
-                    .attr("class", "axis axis--X")
+                    .attr("class", "axis axis--x")
                     .attr("transform", "translate(0," + this.height + ")")
                     .call(this.xAxis);
-                // svg.append("g")
-                //     .attr("class", "axis axis--x")
-                //     .append("line")
-                //     .attr("y1", this.yScale(0))
-                //     .attr("y2", this.yScale(0))
-                //     .attr("x2", this.width);
+
                 var yAxisHandleForUpdate = svg.append("g")
                     .attr("class", "axis axis--y")
                     .call(this.yAxis);
@@ -76,14 +69,12 @@
                 var that = this;
                 this.$root.$on('change-station', (newStation) => {
                     console.log(newStation);
-                    //this.changeStation(newStation);
                     that.updateChart(stationData[newStation], yAxisHandleForUpdate, svg);
                 })
             },
             updateChart(d, yAxisHandleForUpdate, svg) {
                 var that = this;
-                //this.x.domain(this.dayFields);
-                //First update the y-axis domain to match data
+                this.current = d;
                 if(d3.min(d) > 0) {
                     this.yScale.domain([0,d3.max(d)]);
                 } else if(d3.max(d)<0) {
@@ -140,14 +131,8 @@
                             .duration(250)
                             .attr("fill", function (d) {
                                 return that.colorScale(d);
-                            })
-                        // .attr("fill", function(d){
-                        //     if(d<0){
-                        //         return rgb(222,238,0);
-                        //     } else {
-                        //         return rgb(65,220,49);
-                        //     }
-                        // });
+                            });
+
                         tooltip.style("display", "none");
                     })
                     .on("mousemove", function (d) {
@@ -157,17 +142,9 @@
                         tooltip.select("text").text(d);
                     })
                     .attr("fill", function (d) {
-                        // console.log(that.colorScale(d));
                         return that.colorScale(d);
                     });
-                // .attr("fill", function(d){
-                //     if(d<0){
-                //         return rgb(222,238,0);
-                //     } else {
-                //         return rgb(65,220,49);
-                //     }
-                // });
-                // Update old ones, already have x / width from before
+
                 bars.transition()
                     .delay(1500)
                     .attr("y", function (d) {
@@ -200,6 +177,31 @@
                     .attr("font-size", "12px")
                     .attr("font-weight", "bold");
                 // // Handler for dropdown value change
+            },
+            onResize(event) {
+                var that = this;
+                var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
+                console.log(d3.select('#chart').property('clientWidth'));
+                this.xScale.range([0, width]);
+                var graph = d3.select('#waterfall');
+                graph.attr('width', width + 50);
+                graph.select('.axis--x')
+                    .attr('transform', 'translate(0,' + this.height + ')')
+                    .call(this.xAxis);
+                graph.select('.xLabel')
+                    .attr('x', width / 2);
+                graph.selectAll('.bar')
+                    .data(this.current)
+                    .attr('class', 'bar')
+                    .attr('x', function (d, i) { return that.xScale(that.dayFields[i]); })
+                    .attr('y', function (d) {
+                        if (d < 0) {
+                            return that.yScale(0);
+                        } else {
+                            return that.yScale(d);
+                        }
+                    })
+                    .attr('width', this.xScale.bandwidth());
             }
         },
         mounted: function () {
@@ -215,6 +217,7 @@
                     });
                 });
                 that.initChart(stationData);
+                window.addEventListener('resize', that.onResize);
             });
         }
     }
