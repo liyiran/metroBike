@@ -37,7 +37,7 @@
                     <svg id="pie"></svg>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 align-top">
                 <div class="card" >
                     <div class="card-body">
                         <h4 id="pie-card-name" class="card-title">Monthly Bike Usage</h4>

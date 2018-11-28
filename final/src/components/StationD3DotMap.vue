@@ -60,7 +60,12 @@
                                 div.transition()
                                     .duration(200)
                                     .style("opacity", .9);
-                                div.html(d.Station_Name)
+                                div.html(
+                                    'Station ID: ' + d.Station_ID + 
+                                    '<br/> Station Name: ' + d.Station_Name +
+                                    '<br/> Region: ' + d.Region +
+                                    '<br/> Status: ' + d.Status
+                                    )
                                     .style("left", (d3.event.pageX) + "px")
                                     .style("top", (d3.event.pageY) + "px");
                             })
@@ -99,5 +104,18 @@
         stroke: lightskyblue;
         stroke-width: 1px;
         stroke-opacity: 0.5;
+    }
+
+    div.tooltip {	
+        position: absolute;			
+        text-align: left;			
+        width: auto;					
+        height: auto;					
+        padding: 5px;				
+        font-size: 18px;		
+        background: lightsteelblue;	
+        border: 0px;		
+        border-radius: 8px;			
+        pointer-events: none;			
     }
 </style>

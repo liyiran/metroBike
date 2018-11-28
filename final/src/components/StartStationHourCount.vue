@@ -67,7 +67,7 @@
                     .text("Amount");
                 var that = this;
                 this.$root.$on('change-station', (newStation) => {
-                    console.log(newStation);
+                    console.log("newwww: " +newStation);
                     that.updateChart(stationData[newStation], yAxisHandleForUpdate, canvas);
                 })
             },
