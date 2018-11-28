@@ -151,7 +151,7 @@
             onResize(event) {
                 var that = this;
                 var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
-                console.log(d3.select('#chart').property('clientWidth'));
+                // console.log(d3.select('#chart').property('clientWidth'));
                 this.xScale.range([0, width]);
                 var graph = d3.select('#StartStationHourCount');
                 graph.attr('width', width + 50);

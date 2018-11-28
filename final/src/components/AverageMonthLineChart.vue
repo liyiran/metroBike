@@ -277,7 +277,6 @@
               .attr("transform", "translate(0," + height + ")")
               .call(xAxis);
               
-;
   
           svg.select('.y.axis')
               .call(yAxis);

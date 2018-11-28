@@ -6,10 +6,8 @@
         <StartStationHourCount/>
         <EndStationHourCount/>
         <DiffWaterfallChart/>
-        <countByRegion/>
-        <AverageMonthLineChart/>
-
         <CountByRegion/>
+        <AverageMonthLineChart/>
     </div>
 </template>
 
