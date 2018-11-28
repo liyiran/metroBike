@@ -41,6 +41,7 @@
                 yScale: yScale,
                 xAxis: xAxis,
                 yAxis: yAxis,
+                current:[]
             }
         },
         methods: {
@@ -72,6 +73,7 @@
             },
             updateChart(d, yAxisHandleForUpdate, canvas) {
                 var that = this;
+                this.current = d;
                 //First update the y-axis domain to match data
                 this.yScale.domain(d3.extent(d));
                 this.colorScale.domain(d3.extent(d));
@@ -102,7 +104,6 @@
                             .transition("colorfade")
                             .duration(250)
                             .attr("fill", function (d) {
-
                                 return that.colorScale(d);
                             });
                         tooltip.style("display", "none");
@@ -148,16 +149,23 @@
                 // // Handler for dropdown value change
             },
             onResize(event) {
+                var that = this;
                 var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
                 console.log(d3.select('#chart').property('clientWidth'));
                 this.xScale.range([0, width]);
                 var graph = d3.select('#StartStationHourCount');
-                graph.attr('width', width);
+                graph.attr('width', width + 50);
                 graph.select('.axis--x')
                     .attr('transform', 'translate(0,' + this.height + ')')
                     .call(this.xAxis);
                 graph.select('.xLabel')
-                    .attr('x', width / 2)
+                    .attr('x', width / 2);
+                graph.selectAll('.bar')
+                    .data(this.current)
+                    .attr('class', 'bar')
+                    .attr('x', function (d, i) { return that.xScale(that.hourFields[i]); })
+                    .attr('y', function (d) { return that.yScale(d); })
+                    .attr('width', this.xScale.bandwidth());
             }
         },
 
