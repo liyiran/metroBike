@@ -1,0 +1,130 @@
+Station_ID,lat,lon,Station_Name,Region,Status
+3005,34.0485,-118.259,7th & Flowe,DTLA,Active
+3006,34.0455,-118.257,Olive & 8th,DTLA,Active
+3007,34.0505,-118.255,5th & Grand,DTLA,Active
+3008,34.0466,-118.263,Figueroa & ,DTLA,Active
+3010,34.037,-118.255,11th & Mapl,DTLA,Active
+3011,34.0411,-118.268,Figueroa & ,DTLA,Active
+3013,33.7798,-118.263,Anaheim & A,Port of LA,Active
+3014,34.0566,-118.237,Union Stati,DTLA,Active
+3016,34.0529,-118.242,Los Angeles,DTLA,Active
+3018,34.0437,-118.26,Grand & Oly,DTLA,Active
+3019,34.0386,-118.261,12th & Hill,DTLA,Active
+3020,34.0311,-118.267,Hill & Wash,DTLA,Active
+3021,34.0456,-118.237,3rd & Rose,DTLA,Inactive
+3022,34.0461,-118.233,3rd & Santa,DTLA,Active
+3023,34.0509,-118.241,1st & Judge,DTLA,Active
+3024,34.0577,-118.249,Hope & 1st,DTLA,Active
+3025,34.0329,-118.268,Grand & Was,DTLA,Active
+3026,34.0632,-118.246,Figueroa & ,DTLA,Active
+3027,34.05,-118.247,Spring & 3r,DTLA,Active
+3028,34.0583,-118.246,Grand & Tem,DTLA,Active
+3029,34.0489,-118.246,Main & 4th,DTLA,Active
+3030,34.0519,-118.244,Main & 1st,DTLA,Active
+3031,34.0447,-118.252,7th & Sprin,DTLA,Active
+3032,34.0499,-118.256,Hope & 6th,DTLA,Active
+3033,34.041,-118.256,Main & 9th,DTLA,Active
+3034,34.0421,-118.263,Hope & 11th,DTLA,Active
+3035,34.0484,-118.261,Figueroa & ,DTLA,Active
+3036,34.0392,-118.233,Willow St &,DTLA,Active
+3037,34.0348,-118.231,Imperial & ,DTLA,Active
+3038,34.0468,-118.248,Main & 5th,DTLA,Active
+3040,34.0536,-118.266,Wilshire & ,DTLA,Active
+3042,34.0493,-118.239,1st & Centr,DTLA,Active
+3045,34.0285,-118.257,18th & San ,DTLA,Active
+3046,34.053,-118.248,2nd & Hill,DTLA,Active
+3047,34.04,-118.266,Pico & Flow,DTLA,Active
+3048,34.0417,-118.235,5th & Hewit,DTLA,Active
+3049,34.057,-118.254,2nd & Figue,DTLA,Active
+3051,34.0454,-118.254,7th & Broad,DTLA,Active
+3052,34.0511,-118.265,7th & Bixel,DTLA,Active
+3053,34.04,-118.263,12th & Gran,DTLA,Inactive
+3054,34.0392,-118.236,Factory Pla,DTLA,Active
+3055,34.0442,-118.252,7th & Main,DTLA,Inactive
+3056,34.0375,-118.265,Grand & 14t,DTLA,Active
+3057,34.0357,-118.271,18th & Figu,DTLA,Active
+3058,34.0358,-118.233,Industrial ,DTLA,Active
+3059,34.0379,-118.256,11th & Sant,DTLA,Inactive
+3060,34.0349,-118.258,Pico & Mapl,DTLA,Inactive
+3061,34.0447,-118.266,LA Live,DTLA,Inactive
+3062,34.0477,-118.243,3rd & San P,DTLA,Active
+3063,34.048,-118.254,Olive & 5th,DTLA,Active
+3064,34.0468,-118.257,Grand & 7th,DTLA,Active
+3065,34.0606,-118.238,New High & ,DTLA,Active
+3066,34.0634,-118.236,Spring & Co,DTLA,Active
+3067,34.0452,-118.25,Main & 6th,DTLA,Active
+3068,34.0532,-118.251,Grand & 3rd,DTLA,Active
+3069,34.0509,-118.248,Broadway & ,DTLA,Active
+3074,34.0442,-118.261,Hope & Olym,DTLA,Active
+3075,34.0421,-118.256,Broadway & ,DTLA,Active
+3076,34.0406,-118.254,9th & Los A,DTLA,Active
+3077,34.0399,-118.25,8th & Wall,DTLA,Active
+3078,34.0643,-118.239,Hill & Coll,DTLA,Active
+3079,34.0501,-118.233,Temple & Vi,DTLA,Inactive
+3080,34.0342,-118.255,San Julian ,DTLA,Active
+3081,34.0319,-118.25,Stanford & ,DTLA,Active
+3082,34.0465,-118.237,Traction & ,DTLA,Active
+4108,34.0259,-118.238,1 LA wareho,DTLA,Inactive
+4125,33.7667,-118.261,Banning's L,Port of LA,Active
+4126,33.711,-118.285,Cabrillo Be,Port of LA,Active
+4127,33.7489,-118.275,Catalina Ex,Port of LA,Active
+4129,33.7258,-118.281,Crafted 22n,Port of LA,Active
+4130,33.7193,-118.283,DoubleTree ,Port of LA,Active
+4131,33.739,-118.279,Downtown Ha,Port of LA,Active
+4132,33.7491,-118.28,Fanfare Fou,Port of LA,Active
+4133,33.7335,-118.278,Ports O'Cal,Port of LA,Active
+4134,33.7414,-118.278,USS IOWA,Port of LA,Active
+4135,33.7723,-118.268,Waterfront ,Port of LA,Active
+4136,33.7718,-118.277,Waterfront ,Port of LA,Active
+4138,34.1457,-118.148,Old Pasaden,Pasadena,Inactive
+4142,34.1446,-118.145,Pasadena Co,Pasadena,Inactive
+4143,34.1457,-118.144,Garfield & ,Pasadena,Inactive
+4144,34.1424,-118.133,Cordova & L,Pasadena,Inactive
+4146,34.1478,-118.145,City Hall W,Pasadena,Inactive
+4147,34.1452,-118.15,Fair Oaks &,Pasadena,Inactive
+4148,34.1497,-118.145,Pasadena Ce,Pasadena,Inactive
+4149,34.1382,-118.147,Arroyo Park,Pasadena,Inactive
+4150,34.1543,-118.142,Villa Parke,Pasadena,Inactive
+4151,34.1424,-118.142,Los Robles ,Pasadena,Inactive
+4152,34.1497,-118.16,Pasadena Mu,Pasadena,Inactive
+4153,34.1562,-118.167,Rose Bowl,Pasadena,Inactive
+4154,34.1561,-118.151,Fair Oaks &,Pasadena,Inactive
+4155,34.1478,-118.132,Lake & Unio,Pasadena,Inactive
+4156,34.1499,-118.138,Madison & W,Pasadena,Inactive
+4157,34.141,-118.132,Lake & Del ,Pasadena,Inactive
+4158,34.1353,-118.132,Lake & Cali,Pasadena,Inactive
+4159,34.1459,-118.117,Pasadena Ci,Pasadena,Inactive
+4160,34.133,-118.149,Fillmore St,Pasadena,Inactive
+4162,34.1475,-118.148,Memorial Pa,Pasadena,Inactive
+4163,34.1505,-118.132,Lake & Locu,Pasadena,Inactive
+4165,34.1418,-118.149,Del Mar Sta,Pasadena,Inactive
+4166,34.1459,-118.122,Colorado & ,Pasadena,Inactive
+4167,34.1438,-118.154,Pasadena & ,Pasadena,Inactive
+4169,34.147,-118.14,Oakland & U,Pasadena,Inactive
+4170,34.1607,-118.132,Lake & Merr,Pasadena,Inactive
+4174,34.1653,-118.151,Fair Oaks &,Pasadena,Inactive
+4176,34.1379,-118.122,Caltech Eas,Pasadena,Inactive
+4177,34.145,-118.138,Madison & C,Pasadena,Inactive
+4180,34.138,-118.129,Caltech Wes,Pasadena,Inactive
+4181,34.1462,-118.135,Oak Knoll &,Pasadena,Inactive
+4183,34.1461,-118.129,Catalina & ,Pasadena,Inactive
+4194,34.0567,-118.231,Union Stati,DTLA,Inactive
+4202,33.9912,-118.468,Abbot Kinne,Venice,Active
+4204,33.9884,-118.452,Washington ,Venice,Active
+4205,33.9938,-118.454,Venice & Li,Venice,Active
+4206,33.9983,-118.461,California ,Venice,Active
+4207,34.0009,-118.469,Rose & 7th,Venice,Active
+4208,33.9987,-118.473,Rose & Renn,Venice,Active
+4209,33.9962,-118.477,Rose & Main,Venice,Active
+4210,33.9843,-118.472,Ocean Front,Venice,Active
+4211,33.9849,-118.47,Pacific & N,Venice,Active
+4212,33.9881,-118.472,Windward & ,Venice,Active
+4213,33.9954,-118.465,7th & Westm,Venice,Active
+4214,33.9956,-118.482,Ocean Front,Venice,Active
+4215,34.0143,-118.491,Downtown Sa,Venice,Active
+4216,34.0234,-118.48,17th St / S,Venice,Active
+4220,34.0748,-118.259,Park & Echo,DTLA,Active
+4227,34.0306,-118.27,Grand/LATTC,DTLA,Inactive
+4244,34.0181,-118.287,Expo Park/U,DTLA,Inactive
+4249,34.0203,-118.281,Figueroa & ,DTLA,Active
+4254,34.0287,-118.284,Hoover & 29,DTLA,Active

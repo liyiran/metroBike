@@ -49,7 +49,7 @@
                 // map.addControl(new mapboxgl.NavigationControl({position: 'top-left'}));
                 var that = this;
                 map.on('load', function () {
-                    d3.json("./stations.json").then(function (json) {
+                    d3.csv("./station_with_lat.csv").then(function (data) {
                         var container = map.getCanvasContainer();
                         var svg = d3.select(container).append("svg").attr("id", "station");
                         svg.attr("width", 900).attr("height", 600);
@@ -57,18 +57,24 @@
                             // console.log("d is" + d);
                             return map.project(new mapboxgl.LngLat(+d[0], +d[1]));
                         };
-                        var circles = svg.selectAll("circle").data(json.features).enter()
-                            .append("circle").attr("class", "dot part").attr("r", 5).attr("cx", function (d) {
-                                return project(d.geometry.coordinates).x
-                            }).attr("cy", function (d) {
-                                return project(d.geometry.coordinates).y
-                            }).attr("fill", "red").attr("stroke", "black")
+                        var circles = svg.selectAll("circle").data(data).enter()
+                            .append("circle").attr("class", "dot part").attr("r", 5)
+                            .attr("cx", function (d) {
+                                console.log("ddddd:" + d)
+                                return project([d.lon, d.lat]).x
+                            })
+                            .attr("cy", function (d) {
+                                return project([d.lon, d.lat]).y
+                            })
+                            .attr("fill", "red").attr("stroke", "black")
                             .on("click", function (object) {
-                                console.log(object.properties.kioskId);
-                                that.$root.$emit('change-station', object.properties.kioskId);
-                            }).on("mouseover", function () {
+                                console.log(object.Station_ID);
+                                that.$root.$emit('change-station', object.Station_ID);
+                            })
+                            .on("mouseover", function () {
                                 d3.select(this).style("cursor", "pointer");
-                            }).on("mouseout", function () {
+                            })
+                            .on("mouseout", function () {
                                 d3.select(this).style("cursor", "default");
                             });
                         // Update on map interaction
@@ -78,10 +84,10 @@
 
                         function update() {
                             circles.attr("cx", function (d) {
-                                return project(d.geometry.coordinates).x
+                                return project([d.lon, d.lat]).x
                             })
                                 .attr("cy", function (d) {
-                                    return project(d.geometry.coordinates).y
+                                    return project([d.lon, d.lat]).y
                                 });
                         }
                     });

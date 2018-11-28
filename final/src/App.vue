@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="container-fluid">
         <!--<TestComponent1/>-->
-
+        <StationD3DotMap/>
         <StationMapBox/>
         <StartStationHourCount/>
         <EndStationHourCount/>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    import StationD3DotMap from './components/StationD3DotMap'
     import EndStationHourCount from './components/EndStationHourCount'
     import StartStationHourCount from './components/StartStationHourCount'
     import DiffWaterfallChart from './components/DiffWaterfallChart'
@@ -24,6 +25,7 @@
     export default {
         name: 'app',
         components: {
+            StationD3DotMap,
             StartStationHourCount,
             EndStationHourCount,
             DiffWaterfallChart,

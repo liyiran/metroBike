@@ -41,16 +41,16 @@
                         .attr("fill", "white")
                         .attr("stroke", "dimgrey")
                         .attr("d", path);  //generate geographic path
-                    d3.json("./stations.json").then(function (data) {
+                    d3.csv("./station_with_lat.csv").then(function (data) {
                         var div = d3.select("body").append("div")
                             .attr("class", "tooltip")
                             .style("opacity", 0);
                         svg.selectAll(".station")
-                            .data(data.features)
+                            .data(data)
                             .enter()
                             .append("circle")
                             .attr("transform", function (d) {
-                                var marker = projection([d.properties.longitude, d.properties.latitude]);
+                                var marker = projection([d.lon, d.lat]);
                                 return "translate(" + marker[0] + "," + marker[1] + ")";
                             })
                             .attr("r", 2)
@@ -60,7 +60,7 @@
                                 div.transition()
                                     .duration(200)
                                     .style("opacity", .9);
-                                div.html(d.properties.name)
+                                div.html(d.Station_Name)
                                     .style("left", (d3.event.pageX) + "px")
                                     .style("top", (d3.event.pageY) + "px");
                             })
@@ -76,7 +76,7 @@
                             .enter()
                             .append("path")
                             .attr("d", path)  //generate geographic path
-                            .attr("fill", "white")
+                            .attr("fill", 'none')
                             .attr("stroke", "blue")
                     });
 
