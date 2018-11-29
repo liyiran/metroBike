@@ -1,16 +1,22 @@
 <template>
-    <div>
-        <div class="container">
-            <StationMapBox/>
-        </div>
-        <div class="container">
-            <StartStationHourCount/>
-        </div>
-        <div class="container">
-            <EndStationHourCount/>
-        </div>
-        <div class="container">
-            <DiffWaterfallChart/>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <StationMapBox/>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <StartStationHourCount/>
+                    </div>
+                    <div class="col">
+                        <EndStationHourCount/>
+                    </div>
+                    <div class="col">
+                        <DiffWaterfallChart/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
