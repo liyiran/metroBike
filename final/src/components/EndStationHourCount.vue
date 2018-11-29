@@ -13,8 +13,8 @@
     export default {
         name: 'EndStationHourCount',
         data: function () {
-            var hourFields = ["0", "1", "2", "3", "4", "5", "6", "7"
-                , "8", "9", "10", "11", "12", "13", "14", "15"
+            var hourFields = ["00", "01", "02", "03", "04", "05", "06", "07"
+                , "08", "09", "10", "11", "12", "13", "14", "15"
                 , "16", "17", "18", "19", "20", "21", "22", "23"];
             // Define dimensions
             var margin = {
@@ -45,6 +45,8 @@
         },
         methods: {
             initChart(stationData) {
+                var that = this;
+
                 // console.log(stationData);
                 var canvas = d3.select("#EndStationHourCount")
                     .attr("width", this.width + this.margin.left + this.margin.right)
@@ -64,7 +66,26 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Amount");
-                var that = this;
+
+                var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                // var default_data = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]
+
+                var default_bars = canvas.selectAll(".bar-end").data(default_data);
+                // Add default bars 
+                default_bars.enter()
+                    .append("rect")
+                    .attr("class", "bar-end")
+                    .attr("x", function (d, i) {
+                        return that.xScale(that.hourFields[i]);
+                    })
+                    .attr("y", function (d) {
+                        return that.yScale(d);
+                    })
+                    .attr("width", this.xScale.bandwidth())
+                    .attr("height", function (d) {
+                        return that.height - that.yScale(d);
+                    })
+
                 this.$root.$on('change-station', (newStation) => {
                     console.log(newStation);
                     that.updateChart(stationData[newStation],yAxisHandleForUpdate,canvas);
@@ -78,14 +99,13 @@
                 this.colorScale.domain(d3.extent(d));
                 yAxisHandleForUpdate.call(this.yAxis);
                 var bars = canvas.selectAll(".bar").data(d);
-                // Add bars for new data
-                bars.enter()
-                    .append("rect")
-                    .attr("class", "bar")
-                    .merge(bars)
-                    .attr("x", function (d, i) {
-                        return that.xScale(that.hourFields[i]);
-                    })
+
+                var bars = d3.selectAll('.bar-end')
+                    .data(d)
+
+                bars.transition()
+                    .duration(750)
+                    .delay(delay)
                     .attr("y", function (d) {
                         return that.yScale(d);
                     })
@@ -93,57 +113,98 @@
                     .attr("height", function (d) {
                         return that.height - that.yScale(d);
                     })
-                    .on("mouseover", function () {
-                        d3.select(this).attr("fill", "red");
-                        tooltip.style("display", null);
+
+                d3.selectAll('.bar-end')
+                    .on("mouseover", function (d, i) {
+                        d3.select(this).style("fill", "red");
+                        var xPosition = parseFloat(d3.mouse(this)[0]);
+                        var yPosition = parseFloat(d3.mouse(this)[1]);
+                        
+                        d3.select('#tooltip-endbar')
+                            .style('left', xPosition + 'px')
+                            .style('top', yPosition + 'px')
+                            .select('#endbar-info')
+                            .html('<b>' + that.hourFields[i] + ':00 - ' + that.hourFields[i] + ':59</b> <br/>' + 'Borrowing Amount: ' + d + ' <br/>');
+
+                        d3.select('#tooltip-endbar').classed('hidden', false) 
+                            . style("display", 'none')
                     })
                     .on("mouseout", function () {
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
-                            .attr("fill", function(d){
+                            .style("fill", function (d) {
                                 return that.colorScale(d);
                             });
-                        tooltip.style("display", "none");
+                        d3.select('#tooltip-endbar').classed('hidden', true);
                     })
-                    .on("mousemove", function (d) {
-                        var xPosition = d3.mouse(this)[0] - 15;
-                        var yPosition = d3.mouse(this)[1] - 25;
-                        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-                        tooltip.select("text").text(d);
-                    })
-                    .attr("fill", function(d){
+            
+                // Add bars for new data
+                // bars.enter()
+                //     .append("rect")
+                //     .attr("class", "bar")
+                //     .merge(bars)
+                //     .attr("x", function (d, i) {
+                //         return that.xScale(that.hourFields[i]);
+                //     })
+                //     .attr("y", function (d) {
+                //         return that.yScale(d);
+                //     })
+                //     .attr("width", this.xScale.bandwidth())
+                //     .attr("height", function (d) {
+                //         return that.height - that.yScale(d);
+                //     })
+                //     .on("mouseover", function () {
+                //         d3.select(this).attr("fill", "red");
+                //         tooltip.style("display", null);
+                //     })
+                //     .on("mouseout", function () {
+                //         d3.select(this)
+                //             .transition("colorfade")
+                //             .duration(250)
+                //             .attr("fill", function(d){
+                //                 return that.colorScale(d);
+                //             });
+                //         tooltip.style("display", "none");
+                //     })
+                //     .on("mousemove", function (d) {
+                //         var xPosition = d3.mouse(this)[0] - 15;
+                //         var yPosition = d3.mouse(this)[1] - 25;
+                //         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                //         tooltip.select("text").text(d);
+                //     })
+                //     .attr("fill", function(d){
 
-                        return that.colorScale(d);
-                    });
-                // Update old ones, already have x / width from before
-                bars.transition()
-                    .delay(1500)
-                    .attr("y", function (d) {
-                        return that.yScale(d);
-                    })
-                    .attr("height", function (d) {
-                        return that.height - that.yScale(d);
-                    });
-                // Remove old ones
-                bars.exit().remove();
-                // Prep the tooltip bits, initial display is hidden
-                var tooltip = canvas.append("g")
-                    .attr("class", "info")
-                    .style("display", "none");
+                //         return that.colorScale(d);
+                //     });
+                // // Update old ones, already have x / width from before
+                // bars.transition()
+                //     .delay(1500)
+                //     .attr("y", function (d) {
+                //         return that.yScale(d);
+                //     })
+                //     .attr("height", function (d) {
+                //         return that.height - that.yScale(d);
+                //     });
+                // // Remove old ones
+                // bars.exit().remove();
+                // // Prep the tooltip bits, initial display is hidden
+                // var tooltip = canvas.append("g")
+                //     .attr("class", "info")
+                //     .style("display", "none");
 
-                tooltip.append("rect")
-                    .attr("width", 30)
-                    .attr("height", 20)
-                    .attr("fill", "white")
-                    .style("opacity", 0.5);
+                // tooltip.append("rect")
+                //     .attr("width", 30)
+                //     .attr("height", 20)
+                //     .attr("fill", "white")
+                //     .style("opacity", 0.5);
 
-                tooltip.append("text")
-                    .attr("x", 15)
-                    .attr("dy", "1.2em")
-                    .style("text-anchor", "middle")
-                    .attr("font-size", "12px")
-                    .attr("font-weight", "bold");
+                // tooltip.append("text")
+                //     .attr("x", 15)
+                //     .attr("dy", "1.2em")
+                //     .style("text-anchor", "middle")
+                //     .attr("font-size", "12px")
+                //     .attr("font-weight", "bold");
                 // // Handler for dropdown value change
             },
             onResize(event){
@@ -186,3 +247,23 @@
         }
     }
 </script>
+
+<style scoped>
+    #tooltip-endbar {
+        position: absolute;
+        width: auto;
+        height: auto;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+    }
+    #tooltip-endbar.hidden {
+        display: none;
+    }
+</style>

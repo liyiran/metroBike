@@ -4,6 +4,9 @@
         <div class="container-fluid">
             <div class="row"><div class="col-12" id="chart"><svg id="StartStationHourCount"></svg></div> </div>
         </div>
+        <div id="tooltip-startbar" class="hidden">
+            <p id="startbar-info">Borrow Amount</p>
+        </div>
     </div>
 </template>
 
@@ -13,8 +16,8 @@
     export default {
         name: 'StartStationHourCount',
         data: function () {
-            var hourFields = ["0", "1", "2", "3", "4", "5", "6", "7"
-                , "8", "9", "10", "11", "12", "13", "14", "15"
+            var hourFields = ["00", "01", "02", "03", "04", "05", "06", "07"
+                , "08", "09", "10", "11", "12", "13", "14", "15"
                 , "16", "17", "18", "19", "20", "21", "22", "23"];
             // Define dimensions
             var margin = {
@@ -23,7 +26,7 @@
                 bottom: 30,
                 left: 40
             };
-            var colorScale = d3.scaleSequential(d3.interpolateYlGnBu);
+            var colorScale = d3.scaleSequential(d3.interpolateCool).domain([0, 2008]);
             var width = 1000 - margin.left - margin.right;
             var height = 600 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(hourFields).rangeRound([0, width]).padding(0.1);
@@ -45,6 +48,7 @@
         },
         methods: {
             initChart(stationData) {
+                var that = this;
                 // console.log(stationData);
                 var canvas = d3.select("#StartStationHourCount")
                     .attr("width", this.width + this.margin.left + this.margin.right)
@@ -64,26 +68,15 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Amount");
-                var that = this;
-                this.$root.$on('change-station', (newStation) => {
-                    console.log("newwww: " +newStation);
-                    that.updateChart(stationData[newStation], yAxisHandleForUpdate, canvas);
-                })
-            },
-            updateChart(d, yAxisHandleForUpdate, canvas) {
-                var that = this;
-                this.current = d;
-                //First update the y-axis domain to match data
-                this.yScale.domain(d3.extent(d));
-                this.colorScale.domain(d3.extent(d));
-                console.log(d3.extent(d));
-                yAxisHandleForUpdate.call(this.yAxis);
-                var bars = canvas.selectAll(".bar").data(d);
-                // Add bars for new data
-                bars.enter()
+
+                var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                // var default_data = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]
+
+                var default_bars = canvas.selectAll(".bar-start").data(default_data);
+                // Add default bars 
+                default_bars.enter()
                     .append("rect")
-                    .attr("class", "bar")
-                    .merge(bars)
+                    .attr("class", "bar-start")
                     .attr("x", function (d, i) {
                         return that.xScale(that.hourFields[i]);
                     })
@@ -94,57 +87,155 @@
                     .attr("height", function (d) {
                         return that.height - that.yScale(d);
                     })
-                    .on("mouseover", function () {
-                        d3.select(this).attr("fill", "red");
-                        tooltip.style("display", null);
+
+                this.$root.$on('change-station', (newStation) => {
+                    // console.log("newwww: " +newStation);
+                    that.updateChart(stationData[newStation], yAxisHandleForUpdate, canvas);
+                })
+            },
+            updateChart(d, yAxisHandleForUpdate, canvas) {
+                var delay = function (d, i) {
+                    return i * 50;
+                };
+
+                var that = this;
+                this.current = d;
+                //First update the y-axis domain to match data
+                this.yScale.domain(d3.extent(d));
+                // this.colorScale.domain(d3.extent(d));
+                // console.log(d3.extent(d));
+                yAxisHandleForUpdate.call(this.yAxis);
+                // var bars = canvas.selectAll(".bar").data(d);
+                // Add bars for new data
+
+                var bars = d3.selectAll('.bar-start')
+                    .data(d)
+
+                bars.transition()
+                    .duration(750)
+                    // .delay(delay)
+                    .attr("y", function (d) {
+                        return that.yScale(d);
+                    })
+                    .attr("width", this.xScale.bandwidth())
+                    .attr("height", function (d) {
+                        return that.height - that.yScale(d);
+                    })
+                    .transition("colorfade")
+                    .duration(500)
+                    .style("fill", function (d) {
+                        return that.colorScale(d);
+                    }); 
+
+                d3.selectAll('.bar-start')
+                    .on("mouseover", function (d, i) {
+                        d3.select(this).style("fill", "red");
+                        var xPosition = parseFloat(d3.mouse(this)[0]);
+                        var yPosition = parseFloat(d3.mouse(this)[1]);
+                        
+                        d3.select('#tooltip-startbar')
+                            .style('left', xPosition + 'px')
+                            .style('top', yPosition + 'px')
+                            // d3.select('#tooltip-startbar')
+                            // .style('left', (d3.event.pageX) + 'px')
+                            // .style('top', (d3.event.pageY) + 'px')
+                            .select('#startbar-info')
+                            .html('<b>' + that.hourFields[i] + ':00 - ' + that.hourFields[i] + ':59</b> <br/>' + 'Borrowing Amount: ' + d + ' <br/>');
+
+                            d3.select('#tooltip-startbar')
+                            .classed('hidden', false) 
                     })
                     .on("mouseout", function () {
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
-                            .attr("fill", function (d) {
+                            .style("fill", function (d) {
                                 return that.colorScale(d);
                             });
-                        tooltip.style("display", "none");
+                        d3.select('#tooltip-startbar')
+                        .classed('hidden', true)
                     })
-                    .on("mousemove", function (d) {
-                        var xPosition = d3.mouse(this)[0] - 15;
-                        var yPosition = d3.mouse(this)[1] - 25;
-                        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-                        tooltip.select("text").text(d);
-                    })
-                    .attr("fill", function (d) {
+                    // .on("mousemove", function (d) {
+                    //     var xPosition = d3.mouse(this)[0] - 15;
+                    //     var yPosition = d3.mouse(this)[1] - 25;
+                    //     tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                    //     tooltip.select("text").text(d);
+                    // })
+                    // .transition("colorfade")
+                    // .duration(2500)
+                    // .attr("fill", function (d) {
+                    //     return that.colorScale(d);
+                    // });
 
-                        return that.colorScale(d);
-                    });
+                // bars.enter()
+                //     .append("rect")
+                //     .attr("class", "bar")
+                //     .merge(bars)
+                //     .attr("x", function (d, i) {
+                //         return that.xScale(that.hourFields[i]);
+                //     })
+                //     .attr("y", function (d) {
+                //         console.log('y: ' + d)
+                //         console.log('y2: ' + that.yScale(d))
+                //         return that.yScale(d);
+                //     })
+                //     .attr("width", this.xScale.bandwidth())
+                //     .attr("height", function (d) {
+                //         return that.height - that.yScale(d);
+                //     })
+                //     .on("mouseover", function () {
+                //         d3.select(this).attr("fill", "red");
+                //         tooltip.style("display", null);
+                //     })
+                //     .on("mouseout", function () {
+                //         d3.select(this)
+                //             .transition("colorfade")
+                //             .duration(250)
+                //             .attr("fill", function (d) {
+                //                 return that.colorScale(d);
+                //             });
+                //         tooltip.style("display", "none");
+                //     })
+                //     .on("mousemove", function (d) {
+                //         var xPosition = d3.mouse(this)[0] - 15;
+                //         var yPosition = d3.mouse(this)[1] - 25;
+                //         tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                //         tooltip.select("text").text(d);
+                //     })
+                //     .attr("fill", function (d) {
+                //         return that.colorScale(d);
+                //     });
+
                 // Update old ones, already have x / width from before
-                bars.transition()
-                    .delay(1500)
-                    .attr("y", function (d) {
-                        return that.yScale(d);
-                    })
-                    .attr("height", function (d) {
-                        return that.height - that.yScale(d);
-                    });
+                // bars.transition()
+                //     .delay(1500)
+                //     .attr("y", function (d) {
+                //         return that.yScale(d);
+                //     })
+                //     .attr("height", function (d) {
+                //         return that.height - that.yScale(d);
+                //     });
+
                 // Remove old ones
-                bars.exit().remove();
+                // bars.exit().remove();
+
                 // Prep the tooltip bits, initial display is hidden
-                var tooltip = canvas.append("g")
-                    .attr("class", "info")
-                    .style("display", "none");
+                // var tooltip = canvas.append("g")
+                //     .attr("class", "info")
+                //     .style("display", "none");
 
-                tooltip.append("rect")
-                    .attr("width", 30)
-                    .attr("height", 20)
-                    .attr("fill", "white")
-                    .style("opacity", 0.5);
+                // tooltip.append("rect")
+                //     .attr("width", 30)
+                //     .attr("height", 20)
+                //     .attr("fill", "white")
+                //     .style("opacity", 0.5);
 
-                tooltip.append("text")
-                    .attr("x", 15)
-                    .attr("dy", "1.2em")
-                    .style("text-anchor", "middle")
-                    .attr("font-size", "12px")
-                    .attr("font-weight", "bold");
+                // tooltip.append("text")
+                //     .attr("x", 15)
+                //     .attr("dy", "1.2em")
+                //     .style("text-anchor", "middle")
+                //     .attr("font-size", "12px")
+                //     .attr("font-weight", "bold");
                 // // Handler for dropdown value change
             },
             onResize(event) {
@@ -159,9 +250,9 @@
                     .call(this.xAxis);
                 graph.select('.xLabel')
                     .attr('x', width / 2);
-                graph.selectAll('.bar')
+                graph.selectAll('.bar-start')
                     .data(this.current)
-                    .attr('class', 'bar')
+                    // .attr('class', 'bar-start')
                     .attr('x', function (d, i) { return that.xScale(that.hourFields[i]); })
                     .attr('y', function (d) { return that.yScale(d); })
                     .attr('width', this.xScale.bandwidth());
@@ -187,3 +278,23 @@
         }
     }
 </script>
+
+<style scoped>
+    #tooltip-startbar {
+        position: absolute;
+        width: auto;
+        height: auto;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+    }
+    #tooltip-startbar.hidden {
+        display: none;
+    }
+</style>
