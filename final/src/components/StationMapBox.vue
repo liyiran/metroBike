@@ -41,6 +41,10 @@
                 var that = this;
                 map.on('load', function () {
                     d3.csv("./station_with_lat.csv").then(function (data) {
+                        var div = d3.select("body").append("div")
+                            .attr("class", "tooltip_mapbox")
+                            .style("opacity", 0);
+
                         var container = map.getCanvasContainer();
                         var svg = d3.select(container).append("svg").attr("id", "station");
                         svg.attr("width", 900).attr("height", 600);
@@ -49,9 +53,8 @@
                             return map.project(new mapboxgl.LngLat(+d[0], +d[1]));
                         };
                         var circles = svg.selectAll("circle").data(data).enter()
-                            .append("circle").attr("class", "dot part").attr("r", 5)
+                            .append("circle").attr("class", "dot").attr("r", 5)
                             .attr("cx", function (d) {
-                                console.log("ddddd:" + d)
                                 return project([d.lon, d.lat]).x
                             })
                             .attr("cy", function (d) {
@@ -59,8 +62,25 @@
                             })
                             .attr("fill", "red").attr("stroke", "black")
                             .on("click", function (object) {
-                                console.log(object.Station_ID);
                                 that.$root.$emit('change-station', object.Station_ID);
+                                div.transition()
+                                    .duration(200)
+                                    .style("opacity", 1);
+                                div.html(
+                                    '<b>Station ID:</b> ' + object.Station_ID + 
+                                    '<br/> <b>Station Name:</b> ' + object.Station_Name +
+                                    '<br/> <b>Region:</b> ' + object.Region +
+                                    '<br/> <b>Status:</b> ' + object.Status
+                                    )
+                                    // .style("left", (project([object.lon, object.lat]).x) )
+                                    // .style("top", (project([object.lon, object.lat]).y));
+                                    .style("left", (d3.event.pageX) + "px")
+                                    .style("top", (d3.event.pageY) + "px");
+                                    console.log('project: ' + project([object.lon, object.lat]).x)
+                                    console.log('event: ' + d3.event.pageX)
+
+                                d3.selectAll('.dot').style('fill', 'red');
+                                d3.select(this).style('fill', 'blue');
                             })
                             .on("mouseover", function () {
                                 d3.select(this).style("cursor", "pointer");
@@ -98,3 +118,18 @@
         }
     }
 </script>
+
+<style>
+    div.tooltip_mapbox {	
+        position: absolute;			
+        text-align: left;			
+        width: auto;					
+        height: auto;					
+        padding: 5px;				
+        font-size: 15px;		
+        background: white;	
+        border: 2px solid black;		
+        border-radius: 8px;			
+        pointer-events: none;			
+    }
+</style>
