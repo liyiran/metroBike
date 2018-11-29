@@ -23,7 +23,7 @@
 
     export default {
         name: "RegionView",
-        comments: {
+        components: {
             StartStationHourCount,
             EndStationHourCount,
             DiffWaterfallChart,
