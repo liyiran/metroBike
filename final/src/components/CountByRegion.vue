@@ -2,6 +2,16 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <h3>Biking Station Count by region</h3>
+                <p class="alert alert-primary">
+                    This graph portraits accumulative bike usage against region. You can find that Venice is even more popular than DTLA although it is an new area.
+                    Please notice that only DTLA has all data for all months.
+                </p>
+                <p class="alert alert-info">Move your mouse on the lines to see more details.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <select v-on:change="onChange" id="select">
                     <option value="0">Jul 2016</option>
                     <option value="1">Aug 2016</option>

@@ -1,6 +1,7 @@
 <template>
     <div>
         <h3>Count By Hour For Each Start Station</h3>
+        <p class="alert alert-primary">This graph shows the relationship between time and bike borrow amount.</p>
         <div class="container-fluid">
             <div class="row"><div class="col-12" id="chart"><svg id="StartStationHourCount"></svg></div> </div>
         </div>

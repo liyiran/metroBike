@@ -2,7 +2,13 @@
     <div>
         <h3>Count Difference for Borrow and Return by Day</h3>
         <div class="container-fluid">
-            <div class="row"><div class="col-12" id="chart-waterfall"><svg id="waterfall"></svg></div> </div>
+            <div class="row">
+                <p class="alert alert-primary">This graph shows the difference between borrow and return rate. 
+                    If a station has too many borrow rate but too little return rate, the compnay has to use a truck to carry bikes from other stations and fill this station.</p>
+                <div class="col-12" id="chart-waterfall">
+                    <svg id="waterfall">
+                    </svg>
+                </div> </div>
         </div>
         <div id="tooltip-dif" class="hidden">
             <p id="dif-info">Borrow-Return Difference</p>

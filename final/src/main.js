@@ -2,13 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import GeneralInformationView from './components/GeneralInformationView'
 import RegionView from './components/RegionView'
+import InitialView from './components/InitialView'
 import VueRouter from 'vue-router';
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 const routes = [
     {path: '/general', component: GeneralInformationView},
-    {path: '/region', component: RegionView}
+    {path: '/region', component: RegionView},
+    {path:"/", component:InitialView}
 ];
 const router = new VueRouter({routes});
 new Vue({

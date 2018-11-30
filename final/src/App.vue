@@ -9,11 +9,10 @@
                         <p align="center">Yueqin Yang</p>
                         <p align="center">Xiner Ning</p>
                     </div>
-
                 </div>
             </div>
         </div>
-        <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="sticky-top navbar navbar-expand-lg navbar-light bg-dark">
             <div class="d-flex flex-column flex-md-row justify-content-between">
                 <a class="navbar-brand">
                     <img src="./assets/logo.png" height="30">
@@ -60,7 +59,6 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
-        margin-top: 60px;
     }
 
     #section1 {

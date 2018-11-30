@@ -1,24 +1,20 @@
 <template>
     <div>
-        <h3>Mapbox + D3 svg</h3>
+        <h3>Bike station distribution in Mapbox and D3</h3>
         <div class="row">
             <div class="col">
-                <div class="row">
-                    <div class="col-2">
+                <div class="row">      
+                    <div class="col">
+                        <p class="alert alert-info">Click a button, Fly to that area</p>
                         <button type="button" class="btn btn-primary" v-on:click="DTLA()">DTLA</button>
-                    </div>
-                    <div class="col-2">
                         <button type="button" class="btn btn-primary" v-on:click="pasadena()">Pasadena</button>
-                    </div>
-                    <div class="col-2">
                         <button type="button" class="btn btn-primary" v-on:click="portOfLA()">PortOfLA</button>
-                    </div>
-                    <div class="col-2">
                         <button type="button" class="btn btn-primary" v-on:click="venice()">Venice</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
+                        <p class="alert alert-info">Click a station, See details.</p>
                         <div id="wrapper">
                             <div id='map' style='width: 100%; height: 600px;'></div>
                         </div>
@@ -39,6 +35,10 @@
         position: absolute;
         width: 100%;
         height: 100%;
+    }
+    button{
+        margin-right: 5px;
+        margin-bottom: 5px;
     }
 </style>
 <script>

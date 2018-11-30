@@ -1,11 +1,20 @@
 <template>
     <div>
-        <h3>Dot map using D3</h3>
+        <h3>Biking Station and shopping and bus lines distribution based on D3 dot map</h3>
+        <p class="alert alert-primary">This map portraits the bike station distribution. 
+            Each red dot is a bike station where you can borrow or return a bike.
+            The color on the map indicates number of shopping malls in this area. The darker the color the more shopping mall. 
+            The blue lines are bus lines.
+        </p>
+        <p class="alert alert-info">Move your mouse on the dot to see more details.</p>
         <div class="row">
             <div class="col">
                 <svg class="mx-auto d-block" id="ca" width="100%" height="500"></svg>
             </div>
         </div>
+        <p class="alert alert-dark">From this graph we can find that most bike stations are near the bus lines and business center. 
+            However, we may put more stations on the eastern aear since it has bus lines and shopping center but no station at all.
+        </p>
     </div>
 </template>
 <script>

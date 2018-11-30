@@ -1,5 +1,15 @@
 <template>
     <div class="container">
+        <h3>Time history for bike usage</h3>
+        <div class="row">
+            <div class="col">
+                <p class="alert alert-primary">
+                    This graph portraits bike usage against time. You can find that summer and spring are two popular season but winter is the least popular season.
+                    Except DTLA (Downtown of LA), all areas are missing some data because they are NEW areas established recently.
+                </p>
+                <p class="alert alert-info">Move your mouse on the lines to see more details.</p>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div style="min-height: 600px;">
@@ -9,7 +19,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>

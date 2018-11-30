@@ -2,7 +2,12 @@
     <div>
         <h3>Count By Hour For Each Return Station</h3>
         <div class="container-fluid">
-            <div class="row"><div class="col-12" id="chart"><svg id="EndStationHourCount"></svg></div> </div>
+            <div class="row">
+                <p class="alert alert-primary">This graph shows the relationship between time and bike returning amount.</p>
+                <div class="col-12" id="chart">
+                    <svg id="EndStationHourCount"></svg>
+                </div> 
+            </div>
         </div>
         <div id="tooltip-endbar" class="hidden">
             <p id="endbar-info">Borrow Amount</p>
