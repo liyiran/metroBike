@@ -25,22 +25,7 @@
       var color = d3.scaleOrdinal(d3.schemeCategory10)
 
       var data = dataset
-
-    //   var data = dataset.columns.slice(1)
-    //   .map(function(Name) {
-    //     return {
-    //       name: Name,
-    //       values: dataset.map(function(d) {
-    //         //   if(+d[Name] >0){
-    //             return {date: d.month, amount: +d[Name]};
-    //         //   }
-            
-    //       })
-    //     };
-    //   });
-
       console.log(data)
-  
       var margin = {top: 20, right: 170, bottom: 60, left: 40},
       width = parseInt(d3.select("#line").style("width")) - margin.left - margin.right,
       height = parseInt(d3.select("#line").style("height")) - margin.top - margin.bottom;
