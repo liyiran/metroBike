@@ -6,10 +6,13 @@
                 <div class="row">      
                     <div class="col">
                         <p class="alert alert-info">Click a button, Fly to that area</p>
-                        <button type="button" class="btn btn-primary" v-on:click="DTLA()">DTLA</button>
-                        <button type="button" class="btn btn-primary" v-on:click="pasadena()">Pasadena</button>
-                        <button type="button" class="btn btn-primary" v-on:click="portOfLA()">PortOfLA</button>
-                        <button type="button" class="btn btn-primary" v-on:click="venice()">Venice</button>
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <button type="button" class="btn btn-primary" v-on:click="AllRegions()">All Regions</button>
+                                <button type="button" class="btn btn-secondary" v-on:click="DTLA()">DTLA</button>
+                                <button type="button" class="btn btn-secondary" v-on:click="pasadena()">Pasadena</button>
+                                <button type="button" class="btn btn-secondary" v-on:click="portOfLA()">Port Of LA</button>
+                                <button type="button" class="btn btn-secondary" v-on:click="venice()">Venice</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -51,12 +54,19 @@
             return {map: null}
         },
         methods: {
+            AllRegions: function() {
+                this.map.flyTo({
+                    center: [-118.30, 34.00], // starting position
+                    zoom: 9
+                })
+            },
             DTLA: function () {
                 this.map.flyTo({
                     center: [
-                        -118.243683,
-                        34.052235
-                    ]
+                        -118.2467693, 
+                        34.0407130
+                    ],
+                    zoom: 12
                 });
             },
             pasadena: function () {
@@ -64,23 +74,26 @@
                     center: [
                         -118.1445155,
                         34.1477849
-                    ]
+                    ],
+                    zoom: 12
                 });
             },
             portOfLA: function () {
                 this.map.flyTo({
                     center: [
-                        -118.292244,
-                        33.736061
-                    ]
+                        -118.272244,
+                        33.750061
+                    ],
+                    zoom: 11.5
                 });
             },
             venice: function () {
                 this.map.flyTo({
                     center: [
-                        -118.469037,
-                        33.977816
-                    ]
+                        -118.479037,
+                        33.997816
+                    ],
+                    zoom: 12
                 });
             },
             drawMap() {
@@ -89,7 +102,7 @@
                     container: 'map',
                     style: 'mapbox://styles/mapbox/streets-v10',
                     center: [-118.30, 34.00], // starting position
-                    zoom: 10 // starting zoom
+                    zoom: 9 // starting zoom
                 });
                 this.map = map;
                 map.scrollZoom.disable();

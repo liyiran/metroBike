@@ -31,7 +31,7 @@
                 bottom: 30,
                 left: 40
             };
-            var colorScale = d3.scaleSequential(d3.interpolateWarm).domain([0, 2952]);
+            var colorScale = d3.scaleSequential(d3.interpolateWarm).domain([-492, 2952]);
             var width = window.innerWidth * 0.9 / 2 - margin.left - margin.right;
             var height = 300 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(hourFields).rangeRound([0, width]).padding(0.1);

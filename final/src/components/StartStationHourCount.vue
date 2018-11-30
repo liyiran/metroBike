@@ -1,9 +1,18 @@
 <template>
     <div>
         <h3>Count By Hour For Each Start Station</h3>
-        <p class="alert alert-primary">This graph shows the relationship between time and bike borrow amount.</p>
+                <p class="alert alert-primary">This graph shows the relationship between time and bike borrow amount.</p>
         <div class="container-fluid">
-            <div class="row"><div class="col-12" id="chart"><svg id="StartStationHourCount"></svg></div> </div>
+            <div class="row">
+                <div class="col-12" id="legend-startbar">
+                    <svg id="LegendStartbar"></svg>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-12" id="chart-startbar">
+                    <svg id="StartStationHourCount"></svg>
+                </div> 
+            </div>
         </div>
         <div id="tooltip-startbar" class="hidden">
             <p id="startbar-info">Borrow Amount</p>
@@ -22,12 +31,12 @@
                 , "16", "17", "18", "19", "20", "21", "22", "23"];
             // Define dimensions
             var margin = {
-                top: 50,
+                top: 20,
                 right: 20,
                 bottom: 30,
                 left: 40
             };
-            var colorScale = d3.scaleSequential(d3.interpolateCool).domain([0, 2008]);
+            var colorScale = d3.scaleSequential(d3.interpolateCool).domain([-335, 2008]);
             var width = window.innerWidth * 0.9 / 2 - margin.left - margin.right;
             var height = 300 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(hourFields).rangeRound([0, width]).padding(0.1);
@@ -68,6 +77,17 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Amount");
+
+                // var legend = d3.select('#legend-startbar')
+                //     .attr('width', 500)
+                //     .attr('height', 30)
+                // var colorAxis = d3.axisBottom(this.colorScale);
+
+                // legend.append('g')
+                //     .attr('id', 'axis-color')
+                //     .call(colorAxis);
+                
+                
 
                 var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
@@ -152,7 +172,7 @@
             },
             onResize(event) {
                 var that = this;
-                var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
+                var width = parseInt(d3.select('#chart-startbar').property('clientWidth')) - this.margin.left - this.margin.right;
                 this.xScale.range([0, width]);
                 var graph = d3.select('#StartStationHourCount');
                 graph.attr('width', width + 50);
