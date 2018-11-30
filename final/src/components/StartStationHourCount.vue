@@ -21,7 +21,7 @@
                 , "16", "17", "18", "19", "20", "21", "22", "23"];
             // Define dimensions
             var margin = {
-                top: 20,
+                top: 50,
                 right: 20,
                 bottom: 30,
                 left: 40
@@ -90,15 +90,10 @@
                     }); 
 
                 this.$root.$on('change-station', (newStation) => {
-                    // console.log("newwww: " +newStation);
                     that.updateChart(stationData[newStation], yAxisHandleForUpdate, canvas);
                 })
             },
             updateChart(d, yAxisHandleForUpdate, canvas) {
-                var delay = function (d, i) {
-                    return i * 50;
-                };
-
                 var that = this;
                 this.current = d;
                 //First update the y-axis domain to match data
@@ -130,7 +125,7 @@
 
                 d3.selectAll('.bar-start')
                     .on("mouseover", function (d, i) {
-                        d3.select(this).style("fill", "red");
+                        d3.select(this).style("fill", "black");
                         var xPosition = parseFloat(d3.mouse(this)[0]);
                         var yPosition = parseFloat(d3.mouse(this)[1]);
                         
@@ -182,7 +177,6 @@
                     stationData[station] = [];
                     //please avoid such deep function. use two fow loop
                     that.hourFields.forEach(function (field) {
-                        console.log("push: " + (+d[field]))
                         stationData[station].push(+d[field]);
                     });
                 });

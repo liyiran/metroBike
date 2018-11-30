@@ -2,7 +2,10 @@
     <div>
         <h3>Count Difference for Borrow and Return by Day</h3>
         <div class="container-fluid">
-            <div class="row"><div class="col-12" id="chart"><svg id="waterfall"></svg></div> </div>
+            <div class="row"><div class="col-12" id="chart-waterfall"><svg id="waterfall"></svg></div> </div>
+        </div>
+        <div id="tooltip-dif" class="hidden">
+            <p id="dif-info">Borrow-Return Difference</p>
         </div>
     </div>
 </template>
@@ -24,10 +27,9 @@
                 left: 40
             };
             var colorScale = d3.scaleSequential(d3.interpolateRdYlBu);
-            var width = 1000 - margin.left - margin.right;
-            var height = 800 - margin.top - margin.bottom;
+            var width = window.innerWidth *0.95 - margin.left - margin.right;
+            var height = 400 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(dayFields).rangeRound([0, width]).padding(0.1);
-
             var yScale = d3.scaleLinear().rangeRound([height, 0]);
             var xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
             var yAxis = d3.axisLeft(yScale);
@@ -67,8 +69,42 @@
                     .attr("text-anchor", "end")
                     .text("Difference");
                 var that = this;
+
+                var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                this.colorScale.domain([-1,1])
+                // this.yScale.domain([-1,1])
+
+                var default_bars = svg.selectAll(".bar-dif").data(default_data);
+                // Add default bars 
+                default_bars.enter()
+                    .append("rect")
+                    .attr("class", "bar-dif")
+                    .attr("x", function (d, i) {
+                        return that.xScale(that.dayFields[i]);
+                    })
+                    .attr("y", function (d) {
+                        return that.yScale(d);
+                    })
+                    .attr("width", this.xScale.bandwidth())
+                    .attr("height", function (d) {
+                        return that.height - that.yScale(d);
+                    })
+                    .attr("fill", function (d) {
+                        return that.colorScale(d);
+                    }); 
+                
+                svg.append('line')
+                    .attr('id', 'line-0')
+                    .attr('x1', 0)
+                    .attr('y1', this.yScale('0'))
+                    .attr('x2', this.width)
+                    .attr('y2', this.yScale('0'))
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', '1px')
+                    .attr('stroke-dasharray', "5,5")
+
                 this.$root.$on('change-station', (newStation) => {
-                    console.log(newStation);
+                    // console.log(newStation);
                     that.updateChart(stationData[newStation], yAxisHandleForUpdate, svg);
                 })
             },
@@ -84,32 +120,30 @@
                 }
                 
                 var abs;
-                console.log(this.yScale.domain());
+                // console.log(this.yScale.domain());
                 if (Math.abs(d3.extent(d)[0]) > Math.abs(d3.extent(d)[1])) {
                     abs = Math.abs(d3.extent(d)[0]);
                 } else {
                     abs = Math.abs(d3.extent(d)[1]);
                 }
-                console.log(abs);
+                // console.log(abs);
                 this.colorScale.domain([-abs, abs]);
-                console.log(d3.extent(d));
-                yAxisHandleForUpdate.call(this.yAxis);
-                var bars = svg.selectAll(".bar").data(d);
-                // Add bars for new data
-                bars.enter()
-                    .append("rect")
-                    .attr("class", function (d) {
-                        if (d < 0) {
-                            return "bar negative";
-                        } else {
-                            return "bar positive";
-                        }
-                    })
-                    .merge(bars)
-                    .attr("x", function (d, i) {
-                        return that.xScale(that.dayFields[i]);
-                    })
+                // console.log(d3.extent(d));
+                yAxisHandleForUpdate.transition().duration(750).call(this.yAxis);
+
+                var line = d3.select('#line-0')
+                line.transition()
+                    .duration(750)
+                    .attr('y1', this.yScale('0'))
+                    .attr('y2', this.yScale('0'))
+
+                var bars = d3.selectAll(".bar-dif")
+                    .data(d);
+
+                bars.transition()
+                    .duration(750)
                     .attr("y", function (d) {
+                        // return that.yScale(d);
                         if (d < 0) {
                             return that.yScale(0);
                         } else {
@@ -121,67 +155,43 @@
                         // return that.height - that.yScale(d);
                         return Math.abs(that.yScale(d) - that.yScale(0));
                     })
-                    .on("mouseover", function () {
-                        d3.select(this).attr("fill", "red");
-                        tooltip.style("display", null);
+
+                bars.transition("colorfade")
+                    .duration(750)
+                    .style("fill", function (d) {
+                        return that.colorScale(d);
+                    }); 
+
+                d3.selectAll('.bar-dif')
+                    .on("mouseover", function (d, i) {
+                        d3.select(this).style("fill", "black");
+                        var xPosition = parseFloat(d3.mouse(this)[0]);
+                        var yPosition = parseFloat(d3.mouse(this)[1]);
+                        
+                        d3.select('#tooltip-dif')
+                            .style('left', xPosition + 'px')
+                            .style('top', yPosition + 'px')
+                            .select('#dif-info')
+                            .html('Borrow-Return Difference: ' + d + ' <br/>');
+
+                            d3.select('#tooltip-dif')
+                            .classed('hidden', false) 
                     })
                     .on("mouseout", function () {
                         d3.select(this)
                             .transition("colorfade")
                             .duration(250)
-                            .attr("fill", function (d) {
+                            .style("fill", function (d) {
                                 return that.colorScale(d);
                             });
-
-                        tooltip.style("display", "none");
+                        d3.select('#tooltip-dif')
+                        .classed('hidden', true)
                     })
-                    .on("mousemove", function (d) {
-                        var xPosition = d3.mouse(this)[0] - 15;
-                        var yPosition = d3.mouse(this)[1] - 25;
-                        tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-                        tooltip.select("text").text(d);
-                    })
-                    .attr("fill", function (d) {
-                        return that.colorScale(d);
-                    });
-
-                bars.transition()
-                    .delay(1500)
-                    .attr("y", function (d) {
-                        if (d < 0) {
-                            return that.yScale(0);
-                        } else {
-                            return that.yScale(d);
-                        }
-                    })
-                    .attr("height", function (d) {
-                        return Math.abs(that.yScale(d) - that.yScale(0));
-                    });
-                // Remove old ones
-                bars.exit().remove();
-                // Prep the tooltip bits, initial display is hidden
-                var tooltip = svg.append("g")
-                    .attr("class", "info")
-                    .style("display", "none");
-
-                tooltip.append("rect")
-                    .attr("width", 30)
-                    .attr("height", 20)
-                    .attr("fill", "white")
-                    .style("opacity", 0.7);
-
-                tooltip.append("text")
-                    .attr("x", 15)
-                    .attr("dy", "1.2em")
-                    .style("text-anchor", "middle")
-                    .attr("font-size", "12px")
-                    .attr("font-weight", "bold");
-                // // Handler for dropdown value change
             },
             onResize(event) {
                 var that = this;
-                var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
-                console.log(d3.select('#chart').property('clientWidth'));
+                var width = parseInt(d3.select('#chart-waterfall').property('clientWidth')) - this.margin.left - this.margin.right;
+                // console.log(d3.select('#chart-waterfall').property('clientWidth'));
                 this.xScale.range([0, width]);
                 var graph = d3.select('#waterfall');
                 graph.attr('width', width + 50);
@@ -225,5 +235,22 @@
 </script>
 
 <style scoped>
+    #tooltip-dif {
+        position: absolute;
+        width: auto;
+        height: auto;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+    }
+    #tooltip-dif.hidden {
+        display: none;
+    }
 
 </style>

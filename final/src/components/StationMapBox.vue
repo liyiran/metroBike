@@ -97,7 +97,7 @@
                 // map.addControl(new mapboxgl.NavigationControl({position: 'top-left'}));
                 var that = this;
                 map.on('load', function () {
-                    d3.csv("./station_with_lat.csv").then(function (data) {
+                    d3.csv("./station_lat.csv").then(function (data) {
                         var div = d3.select("body").append("div")
                             .attr("class", "tooltip_mapbox")
                             .style("opacity", 0);

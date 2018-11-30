@@ -36,7 +36,7 @@
                         .attr("fill", "white")
                         .attr("stroke", "dimgrey")
                         .attr("d", path);  //generate geographic path
-                    d3.csv("./station_with_lat.csv").then(function (data) {
+                    d3.csv("./station_lat.csv").then(function (data) {
                         var div = d3.select("body").append("div")
                             .attr("class", "tooltip")
                             .style("opacity", 0);

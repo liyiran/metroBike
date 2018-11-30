@@ -12,10 +12,12 @@
                     <div class="col">
                         <EndStationHourCount/>
                     </div>
-                    <div class="col">
-                        <DiffWaterfallChart/>
-                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <DiffWaterfallChart/>
             </div>
         </div>
     </div>

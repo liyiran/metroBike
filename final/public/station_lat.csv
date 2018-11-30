@@ -1,5 +1,4 @@
 "Station_ID","lat","lon","Station_Name","Region","Status"
-3000,NULL,NULL,"Virtual Station","N/A","Active"
 3005,34.0485,-118.259,"7th & Flower","DTLA","Active"
 3006,34.0455,-118.257,"Olive & 8th","DTLA","Active"
 3007,34.0505,-118.255,"5th & Grand","DTLA","Active"
