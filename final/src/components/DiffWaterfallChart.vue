@@ -176,9 +176,11 @@
                         
                         d3.select('#tooltip-dif')
                             .style('left', xPosition + 'px')
-                            .style('top', yPosition + 'px')
+                            .style('top', (yPosition + 100) + 'px')
+                            // .style("left", (d3.event.pageX) + "px")
+                            // .style("top", (d3.event.pageY - 757) + "px")
                             .select('#dif-info')
-                            .html('Borrow-Return Difference: ' + d + ' <br/>');
+                            .html('Borrow-Return Difference: ' + d);
 
                             d3.select('#tooltip-dif')
                             .classed('hidden', false) 

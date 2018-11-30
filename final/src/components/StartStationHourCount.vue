@@ -152,7 +152,7 @@
                         
                         d3.select('#tooltip-startbar')
                             .style('left', xPosition + 'px')
-                            .style('top', yPosition + 'px')
+                            .style('top', (yPosition + 200) + 'px')
                             .select('#startbar-info')
                             .html('<b>' + that.hourFields[i] + ':00 - ' + that.hourFields[i] + ':59</b> <br/>' + 'Borrowing Amount: ' + d + ' <br/>');
 

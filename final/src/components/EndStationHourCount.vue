@@ -134,7 +134,9 @@
                         
                         d3.select('#tooltip-endbar')
                             .style('left', xPosition + 'px')
-                            .style('top', yPosition + 'px')
+                            .style('top', (yPosition + 60) + 'px')
+                            // .style("left", (d3.event.pageX) + "px")
+                            // .style("top", (d3.event.pageY - 757) + "px")
                             .select('#endbar-info')
                             .html('<b>' + that.hourFields[i] + ':00 - ' + that.hourFields[i] + ':59</b> <br/>' + 'Returning Amount: ' + d + ' <br/>');
 
