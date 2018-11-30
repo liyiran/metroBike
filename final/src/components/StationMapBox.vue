@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <div id="wrapper">
-                    <div id='map' style='width: 900px; height: 600px;'></div>
+                    <div id='map' style='width: 100%; height: 600px;'></div>
                 </div>
             </div>
         </div>
@@ -16,6 +16,7 @@
         bottom: 0;
         width: 100%;
     }
+
     #station {
         position: absolute;
         width: 100%;
@@ -37,6 +38,8 @@
                     center: [-118.30, 34.00], // starting position
                     zoom: 10 // starting zoom
                 });
+                map.scrollZoom.disable();
+                map.addControl(new mapboxgl.NavigationControl());
                 // map.addControl(new mapboxgl.NavigationControl({position: 'top-left'}));
                 var that = this;
                 map.on('load', function () {
@@ -67,17 +70,17 @@
                                     .duration(200)
                                     .style("opacity", 1);
                                 div.html(
-                                    '<b>Station ID:</b> ' + object.Station_ID + 
+                                    '<b>Station ID:</b> ' + object.Station_ID +
                                     '<br/> <b>Station Name:</b> ' + object.Station_Name +
                                     '<br/> <b>Region:</b> ' + object.Region +
                                     '<br/> <b>Status:</b> ' + object.Status
-                                    )
-                                    // .style("left", (project([object.lon, object.lat]).x) )
-                                    // .style("top", (project([object.lon, object.lat]).y));
+                                )
+                                // .style("left", (project([object.lon, object.lat]).x) )
+                                // .style("top", (project([object.lon, object.lat]).y));
                                     .style("left", (d3.event.pageX) + "px")
                                     .style("top", (d3.event.pageY) + "px");
-                                    console.log('project: ' + project([object.lon, object.lat]).x)
-                                    console.log('event: ' + d3.event.pageX)
+                                console.log('project: ' + project([object.lon, object.lat]).x)
+                                console.log('event: ' + d3.event.pageX)
 
                                 d3.selectAll('.dot').style('fill', 'red');
                                 d3.select(this).style('fill', 'blue');
@@ -120,16 +123,16 @@
 </script>
 
 <style>
-    div.tooltip_mapbox {	
-        position: absolute;			
-        text-align: left;			
-        width: auto;					
-        height: auto;					
-        padding: 5px;				
-        font-size: 15px;		
-        background: white;	
-        border: 2px solid black;		
-        border-radius: 8px;			
-        pointer-events: none;			
+    div.tooltip_mapbox {
+        position: absolute;
+        text-align: left;
+        width: auto;
+        height: auto;
+        padding: 5px;
+        font-size: 15px;
+        background: white;
+        border: 2px solid black;
+        border-radius: 8px;
+        pointer-events: none;
     }
 </style>
