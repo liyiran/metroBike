@@ -3,7 +3,7 @@
         <h3>Dot map using D3</h3>
         <div class="row">
             <div class="col">
-                <svg class="mx-auto d-block" id="ca" width="900" height="500"></svg>
+                <svg class="mx-auto d-block" id="ca" width="100%" height="500"></svg>
             </div>
         </div>
     </div>
@@ -30,7 +30,10 @@
                         ;
                     d3.json("./la-county-regions-current.geojson").then(function (caJson) {
 
-                        var projection = d3.geoMercator().center([-118.243683, 33.952235]).scale(40000);
+                        var projection = d3.geoMercator().center([-117.843683, 33.952235]).scale(40000);
+                        window.addEventListener('resize', function () {
+                            projection.center([-118.243683, 33.952235]);
+                        });
                         var path = d3.geoPath().projection(projection);
                         var graticule = d3.geoGraticule()  // graticule generator
                             .step([0.2, 0.2]);
