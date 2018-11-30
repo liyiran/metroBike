@@ -34,7 +34,6 @@
                     var color = d3.scaleOrdinal(d3.schemeCategory10)
 
                     var data = dataset
-                    console.log(data)
                     var margin = {top: 20, right: 170, bottom: 60, left: 40},
                         width = parseInt(d3.select("#line").style("width")) - margin.left - margin.right,
                         height = parseInt(d3.select("#line").style("height")) - margin.top - margin.bottom;
@@ -44,10 +43,7 @@
                     var otherLinesOpacityHover = "0.2";
                     var lineStroke = "2.5px";
                     var lineStrokeHover = "4.5px";
-
-                    // var circleOpacity = '1';
                     var circleRadius = 6;
-                    // var circleRadiusHover = 6;
 
                     /* Format Data */
                     var parseDate = d3.timeParse("%b-%y");

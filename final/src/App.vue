@@ -36,16 +36,13 @@
             return {
                 word: "",
                 duration: 4000,
-                mainAudio: "http://tholman.com/elevator.js/music/elevator.mp3",
-                endAudio: "http://tholman.com/elevator.js/music/ding.mp3",
+                mainAudio: "",
+                endAudio: "",
             }
         },
         components: {
             VueElevator
         },
-        mounted: function () {
-        }
-       
     }
 </script>
 <style lang="scss">
