@@ -3,7 +3,6 @@
         <div class="row">
             <div class="col">
                 <select v-on:change="onChange" id="select">
-                    <option value="-1">Select Month</option>
                     <option value="0">Jul 2016</option>
                     <option value="1">Aug 2016</option>
                     <option value="2">Sep 2016</option>
@@ -27,7 +26,7 @@
                     <option value="20">Mar 2018</option>
                     <option value="21">Apr 2018</option>
                     <option value="22">May 2018</option>
-                    <option value="23">Jun 2018</option>
+                    <option value="23" selected>Jun 2018</option>
                 </select>
             </div>
         </div>
@@ -38,7 +37,7 @@
                 </div>
             </div>
             <div class="col-sm-4 align-top">
-                <div class="card" >
+                <div class="card">
                     <div class="card-body">
                         <h4 id="pie-card-name" class="card-title">Monthly Bike Usage</h4>
                         <h6 class="card-subtitle mb-2 text-muted">The Average Amount of Metro Bikes Used in Regions in Each Month</h6>
@@ -65,99 +64,86 @@
                 this.initChart();
             },
             initChart() {
+                var that = this;
                 d3.json("./countMonthRegionPie.json").then(function (dataset) {
                     // console.log(dataset);
 
-                    var region = dataset.map(function (d) {
+                    that.region = dataset.map(function (d) {
                         return d.region
                     });
                     var color = d3.scaleOrdinal()
-                        .domain(region)
+                        .domain(that.region)
                         .range(d3.schemeCategory10);
                     var sel = document.getElementById('select');
                     var value = sel.options[sel.selectedIndex].value
 
                     if (value == -1) {
                         var data = [{region: "DTLA", average: "1"}, {region: "Pasadena", average: "1"}, {region: "PortOfLA", average: "1"}, {region: "Venice", average: "1"}]
-                    }
-                    else { var data = dataset[value].count; }
-
-                    // var data = dataset[22].count;
-                    // console.log(data);
-
-                    var diameter = parseInt(d3.select('#container').property('clientWidth'));
-                    if (diameter > 800) {
-                        diameter = 800
+                    } else {
+                        var data = dataset[value].count;
                     }
 
-                    var radiusOver = diameter / 2,
-                        radius = radiusOver - 30;
+                    that.diameter = parseInt(d3.select('#container').property('clientWidth'));
+                    if (that.diameter > 800) {
+                        that.diameter = 800
+                    }
 
+                    that.radiusOver = that.diameter / 2,
+                        that.radius = that.radiusOver *.75;
+                   
                     var svg = d3.select("#pie")
-                    // .attr("width", diameter)
-                    // .attr("height", diameter)
                         .attr("class", "pie");
-
-                    // console.log("hahahhahah")
                     var g = svg.append("g")
-                        .attr('id','wholeG')
-                        .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
-
+                        .attr('id', 'wholeG')
+                        .attr("transform", "translate(" + that.diameter / 2 + "," + that.diameter / 2 + ")");
                     var pie = d3.pie()  //pie generator
                         .value(function (d) {
                             return d.average;
                         });
 
-                    var path = d3.arc()
-                        .outerRadius(radius)
+                    that.path = d3.arc()
+                        .outerRadius(that.radius)
                         .innerRadius(0);  //make != 0 for a donut chart
-
-                    var pathOver = d3.arc()
-                        .outerRadius(radiusOver)
-                        .innerRadius(0);  //make != 0 for a donut chart
-
-                    var label = d3.arc()
-                        .outerRadius(radius * 1/3)
-                        .innerRadius(radius);
-
-                    var labelOver = d3.arc()
-                        .outerRadius(radiusOver * 1/3)
-                        .innerRadius(radiusOver);
-
-                    var arc = g.selectAll(".arc")
+                      //make != 0 for a donut chart
+                    that.pathOver = d3.arc()
+                        .outerRadius(that.radiusOver)
+                        .innerRadius(0);
+                    that.label = d3.arc()
+                        .outerRadius(that.radius / 3)
+                        .innerRadius(that.radius);
+                    that.labelOver = d3.arc()
+                        .outerRadius(that.radiusOver / 3)
+                        .innerRadius(that.radiusOver);
+                    that.arc = g.selectAll(".arc")
                         .data(pie(data))  //use pie generator to create the data needed for the each slice of the pie
                         .enter().append("g")
                         .attr("class", function (d) {
                             return d.data.region;
                         })
 
-                    var slice = arc.append("path")  //for each slide use arc path generator to draw the pie
-                        .attr("d", path)
+                    that.slice = that.arc.append("path")  //for each slide use arc path generator to draw the pie
+                        .attr("d", that.path)
                         .attr("class", "slice")
-                        // .attr("stroke", "white")
                         .attr("fill", function (d) {
                             return color(d.data.region);
                         });  //get data from node (select and $0.__data__ in console)
-
-                    console.log("1: " + radius)
-
-                    arc.append("text")  //for each slide use label path generator to place the text
+                    that.arc.append("text")  //for each slide use label path generator to place the text
                         .attr("class", "text")
-                        .attr("transform", function(d) {
-                            var midAngle = d.endAngle < Math.PI ? d.startAngle/2 + d.endAngle/2 : d.startAngle/2  + d.endAngle/2 + Math.PI ;
-                            return "translate(" + label.centroid(d)[0] + "," + label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180/Math.PI) + ")"; })
-                        // .attr("dy", ".35em")
+                        .attr("transform", function (d) {
+                            var midAngle = d.endAngle < Math.PI ? d.startAngle / 2 + d.endAngle / 2 : d.startAngle / 2 + d.endAngle / 2 + Math.PI;
+                            return "translate(" + that.label.centroid(d)[0] + "," + that.label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180 / Math.PI) + ")";
+                        })
                         .attr('text-anchor', 'middle')
                         .attr('fill', 'black')
                         // .attr("dy", "0.35em")
-                        .style("font-size", radius / 10)
+                        .style("font-size", that.radius / 10)
                         .text(function (d) {
                             return d.data.region;
                         });
                     var sel = document.getElementById('select');
                     var text = sel.options[sel.selectedIndex].text
-                    if(value != -1) {
-                        slice.on("mouseover", function (d) {
+                    if (value != -1) {
+                        that.slice.on("mouseover", function (d) {
                             d3.select('#pie-card-name').html(d.data.region);
                             d3.select('.card-subtitle').html(text);
                             d3.select('#pie-card-desc').html(d.data.average + ' bikes per station<br/>');
@@ -165,17 +151,18 @@
                                 .style('opacity', 0.5);
                             d3.select(this).transition()
                                 .duration(300)
-                                .attr("d", pathOver)
+                                .attr("d", that.pathOver)
                                 .style('opacity', 1);
 
                             d3.selectAll("." + d.data.region).selectAll('.text')
                                 .transition()
                                 .duration(300)
-                                .attr("transform", function(d) {
-                                    var midAngle = d.endAngle < Math.PI ? d.startAngle/2 + d.endAngle/2 : d.startAngle/2  + d.endAngle/2 + Math.PI ;
-                                    return "translate(" + labelOver.centroid(d)[0] + "," + labelOver.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180/Math.PI) + ")"; })
+                                .attr("transform", function (d) {
+                                    var midAngle = d.endAngle < Math.PI ? d.startAngle / 2 + d.endAngle / 2 : d.startAngle / 2 + d.endAngle / 2 + Math.PI;
+                                    return "translate(" + that.labelOver.centroid(d)[0] + "," + that.labelOver.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180 / Math.PI) + ")";
+                                })
                                 // .attr("dy", ".35em")
-                                .style("font-size", radiusOver / 10)
+                                .style("font-size", that.radiusOver / 10)
                         })
                             .on("mouseout", function () {
                                 d3.select('#pie-card-name').html('Monthly Bike Usage');
@@ -185,61 +172,56 @@
                                     .style('opacity', 1);
                                 d3.select(this).transition()
                                     .duration(300)
-                                    .attr("d", path);
+                                    .attr("d", that.path);
 
                                 d3.selectAll('.text')
                                     .transition()
                                     .duration(300)
-                                    .attr("transform", function(d) {
-                                        var midAngle = d.endAngle < Math.PI ? d.startAngle/2 + d.endAngle/2 : d.startAngle/2  + d.endAngle/2 + Math.PI ;
-                                        return "translate(" + label.centroid(d)[0] + "," + label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180/Math.PI) + ")"; })
+                                    .attr("transform", function (d) {
+                                        var midAngle = d.endAngle < Math.PI ? d.startAngle / 2 + d.endAngle / 2 : d.startAngle / 2 + d.endAngle / 2 + Math.PI;
+                                        return "translate(" + that.label.centroid(d)[0] + "," + that.label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180 / Math.PI) + ")";
+                                    })
                                     // .attr("dy", ".35em")
-                                    .style("font-size", radius / 10);
-                                console.log("2: " +radius)
+                                    .style("font-size", that.radius / 10);
                             });
                     }
 
                     function resize() {
-                        var diameter = parseInt(d3.select('#container').property('clientWidth'));
-                        if (diameter > 800) {
-                            diameter = 800
+                        that.diameter = parseInt(d3.select('#container').property('clientWidth'));
+                        if (that.diameter > 800) {
+                            that.diameter = 800
                         }
-                        var radiusOver = diameter / 2,
-                            radius = radiusOver - 30;
+                        that.radiusOver = that.diameter / 2;
+                        that.radius = that.radiusOver *.75;
 
-                        console.log("d: " + diameter)
 
-                        // d3.select("#pie")
-                        // .attr("width", diameter)
-                        // .attr("height", diameter)
+                        d3.select('#wholeG').attr("transform", "translate(" + that.diameter / 2 + "," + that.diameter / 2 + ")");
 
-                        d3.select('#wholeG').attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
-
-                        var path = d3.arc()
-                            .outerRadius(radius)
+                        that.path = d3.arc()
+                            .outerRadius(that.radius)
                             .innerRadius(0);  //make != 0 for a donut chart
 
-                        var pathOver = d3.arc()
-                            .outerRadius(radiusOver)
+                        that.pathOver = d3.arc()
+                            .outerRadius(that.radiusOver)
                             .innerRadius(0);  //make != 0 for a donut chart
 
-                        var label = d3.arc()
-                            .outerRadius(radius * 1/3)
-                            .innerRadius(radius);
+                        that.label = d3.arc()
+                            .outerRadius(that.radius * 1 / 3)
+                            .innerRadius(that.radius);
 
-                        var labelOver = d3.arc()
-                            .outerRadius(radiusOver * 1/3)
-                            .innerRadius(radiusOver);
+                        that.labelOver = d3.arc()
+                            .outerRadius(that.radiusOver * 1 / 3)
+                            .innerRadius(that.radiusOver);
 
                         svg.selectAll('.slice') //for each slide use arc path generator to draw the pie
-                            .attr("d", path)
+                            .attr("d", that.path)
 
-                        arc.selectAll(".text")  //for each slide use label path generator to place the text
-                            .attr("transform", function(d) {
-                                var midAngle = d.endAngle < Math.PI ? d.startAngle/2 + d.endAngle/2 : d.startAngle/2  + d.endAngle/2 + Math.PI ;
-                                return "translate(" + label.centroid(d)[0] + "," + label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180/Math.PI) + ")";
+                        that.arc.selectAll(".text")  //for each slide use label path generator to place the text
+                            .attr("transform", function (d) {
+                                var midAngle = d.endAngle < Math.PI ? d.startAngle / 2 + d.endAngle / 2 : d.startAngle / 2 + d.endAngle / 2 + Math.PI;
+                                return "translate(" + that.label.centroid(d)[0] + "," + that.label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180 / Math.PI) + ")";
                             })
-                            .style("font-size", radius / 10);
+                            .style("font-size", that.radius / 10);
                     }
 
                     d3.select(window).on('resize', resize);
