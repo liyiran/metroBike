@@ -3,8 +3,26 @@
         <h3>Mapbox + D3 svg</h3>
         <div class="row">
             <div class="col">
-                <div id="wrapper">
-                    <div id='map' style='width: 100%; height: 600px;'></div>
+                <div class="row">
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" v-on:click="DTLA()">DTLA</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" v-on:click="pasadena()">Pasadena</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" v-on:click="portOfLA()">PortOfLA</button>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary" v-on:click="venice()">Venice</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div id="wrapper">
+                            <div id='map' style='width: 100%; height: 600px;'></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,7 +47,42 @@
 
     export default {
         name: 'StationDotMap',
+        data: function () {
+            return {map: null}
+        },
         methods: {
+            DTLA: function () {
+                this.map.flyTo({
+                    center: [
+                        -118.243683,
+                        34.052235
+                    ]
+                });
+            },
+            pasadena: function () {
+                this.map.flyTo({
+                    center: [
+                        -118.1445155,
+                        34.1477849
+                    ]
+                });
+            },
+            portOfLA: function () {
+                this.map.flyTo({
+                    center: [
+                        -118.292244,
+                        33.736061
+                    ]
+                });
+            },
+            venice: function () {
+                this.map.flyTo({
+                    center: [
+                        -118.469037,
+                        33.977816
+                    ]
+                });
+            },
             drawMap() {
                 mapboxgl.accessToken = 'pk.eyJ1IjoiaW5mNTU0ZXVyZWthIiwiYSI6ImNqb2JzYzI3ODBld3EzcG80YzNqbTRtMzIifQ.vZla3jmyqwz_Ux7GcmhsCg';
                 var map = new mapboxgl.Map({
@@ -38,6 +91,7 @@
                     center: [-118.30, 34.00], // starting position
                     zoom: 10 // starting zoom
                 });
+                this.map = map;
                 map.scrollZoom.disable();
                 map.addControl(new mapboxgl.NavigationControl());
                 // map.addControl(new mapboxgl.NavigationControl({position: 'top-left'}));
