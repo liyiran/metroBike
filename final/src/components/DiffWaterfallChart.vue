@@ -252,6 +252,12 @@
                 that.initChart(stationData);
                 window.addEventListener('resize', that.onResize);
             });
+        } ,
+        ready: function () {
+            window.addEventListener('resize', this.onResize);
+        },
+        beforeDestroy: function () {
+            window.removeEventListener('resize', this.onResize)
         }
     }
 
