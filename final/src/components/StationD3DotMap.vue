@@ -1,20 +1,27 @@
 <template>
     <div>
-        <h3>Biking Station and shopping and bus lines distribution based on D3 dot map</h3>
-        <p class="alert alert-primary">This map portraits the bike station distribution. 
+        <!-- <h3>Biking Station and shopping and bus lines distribution based on D3 dot map</h3> -->
+        <!-- <p class="alert alert-primary">This map portraits the bike station distribution. 
             Each red dot is a bike station where you can borrow or return a bike.
             The color on the map indicates number of shopping malls in this area. The darker the color the more shopping mall. 
             The blue lines are bus lines.
-        </p>
-        <p class="alert alert-info">Move your mouse on the dot to see more details.</p>
+        </p> -->
+        <!-- <p class="alert alert-info">Move your mouse on the dot to see more details.</p> -->
+        <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            Moving mouse over red dots to see more details.
+        </div>
         <div class="row">
             <div class="col">
                 <svg class="mx-auto d-block" id="ca" width="100%" height="500"></svg>
             </div>
         </div>
-        <p class="alert alert-dark">From this graph we can find that most bike stations are near the bus lines and business center. 
-            However, we may put more stations on the eastern aear since it has bus lines and shopping center but no station at all.
-        </p>
+        <div class="container">
+            <br/>
+            <p>From this graph we can find that most bike stations are near the bus lines and business center. 
+                However, we may put more stations on the eastern aear since it has bus lines and shopping center but no station at all.
+            </p>
+        </div>
     </div>
 </template>
 <script>
@@ -66,6 +73,15 @@
                             .attr('name',function(d) {
                                 return d.properties.name
                             });  //generate geographic path
+                        d3.json("./bus-line.geojson").then(function (data) {
+                            svg.selectAll(".line")
+                                .data(data.features)
+                                .enter()
+                                .append("path")
+                                .attr("d", path)  //generate geographic path
+                                .attr("fill", 'none')
+                                .attr("stroke", "blue")
+                        });
                         d3.csv("./station_lat.csv").then(function (data) {
                             var div = d3.select("body").append("div")
                                 .attr("class", "tooltip")
@@ -80,7 +96,6 @@
                                 })
                                 .attr("r", 2)
                                 .attr("fill", "red")
-                                .attr("opacity", 0.8)
                                 .on("mouseover", function (d) {
                                     div.transition()
                                         .duration(200)
@@ -100,15 +115,7 @@
                                         .style("opacity", 0);
                                 });
                         });
-                        d3.json("./bus-line.geojson").then(function (data) {
-                            svg.selectAll(".line")
-                                .data(data.features)
-                                .enter()
-                                .append("path")
-                                .attr("d", path)  //generate geographic path
-                                .attr("fill", 'none')
-                                .attr("stroke", "blue")
-                        });
+                        
 
                     });
                 });
@@ -139,7 +146,6 @@
                         .attr("transform","translate(20,10)")
                         .attr("r", 2)
                         .attr("fill", "red")
-                        .attr("opacity", 0.9);
                     legendLabel.append("text")
                         .attr("transform","translate(40,10)")
                         .attr("alignment-baseline", "middle")
