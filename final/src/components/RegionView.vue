@@ -9,9 +9,12 @@
                 <ul>
                     <li>The Mapbox below shows the station distribution. Click a button to zoom in to the selected region.</li>
                     <li>The two bar charts on the right side of the map show the bike borrowing and returning amount related to the time in a day.</li>
-                    <li>The waterfall chart shows the the difference between borrow and return rate. If a station has too many borrow rate but too little return rate, the compnay has to use a truck to carry bikes from other stations and fill this station.</li>
-                    <li>Click a station on the map will show the detailed information of this station.</li>
+                    <li>The waterfall chart shows the the difference between borrow and return rate. If a station has too many borrow rate but too little return rate, the company has to use a truck to carry bikes from other stations and fill this station.</li>
+                    <!-- <li></li> -->
                 </ul>
+                <div class="alert alert-info">
+                    Click a station on the map will show the detailed information of this station.
+                </div>
                 <br/>
             </div>
         <!-- </div> -->

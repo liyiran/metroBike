@@ -63,7 +63,7 @@
                     zoom: 9
                 });
                 d3.select('#tooltip-mapbox')
-                    .classed('hidden', false);
+                    .classed('hidden', true);
             },
             DTLA: function () {
                 this.map.flyTo({

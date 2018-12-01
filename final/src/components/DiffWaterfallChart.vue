@@ -98,7 +98,7 @@
                     .attr("y", - 10)
                     .attr("text-anchor", "middle")
                     .attr('font-size', 20)
-                    .text("Borrowing-Returning Difference");
+                    .text("Borrow-Return Difference");
 
                 var that = this;
 
