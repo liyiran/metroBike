@@ -197,41 +197,45 @@
                     }
 
                     function resize() {
-                        that.diameter = parseInt(d3.select('#container').property('clientWidth'));
-                        if (that.diameter > 800) {
-                            that.diameter = 800
+                        try {
+                            that.diameter = parseInt(d3.select('#container').property('clientWidth'));
+                            if (that.diameter > 800) {
+                                that.diameter = 800
+                            }
+                            that.radiusOver = that.diameter / 2;
+                            that.radius = that.radiusOver * .75;
+
+
+                            d3.select('#wholeG').attr("transform", "translate(" + that.diameter / 2 + "," + that.diameter / 2 + ")");
+
+                            that.path = d3.arc()
+                                .outerRadius(that.radius)
+                                .innerRadius(0);  //make != 0 for a donut chart
+
+                            that.pathOver = d3.arc()
+                                .outerRadius(that.radiusOver)
+                                .innerRadius(0);  //make != 0 for a donut chart
+
+                            that.label = d3.arc()
+                                .outerRadius(that.radius * 1 / 3)
+                                .innerRadius(that.radius);
+
+                            that.labelOver = d3.arc()
+                                .outerRadius(that.radiusOver * 1 / 3)
+                                .innerRadius(that.radiusOver);
+
+                            svg.selectAll('.slice') //for each slide use arc path generator to draw the pie
+                                .attr("d", that.path)
+
+                            that.arc.selectAll(".text")  //for each slide use label path generator to place the text
+                                .attr("transform", function (d) {
+                                    var midAngle = d.endAngle < Math.PI ? d.startAngle / 2 + d.endAngle / 2 : d.startAngle / 2 + d.endAngle / 2 + Math.PI;
+                                    return "translate(" + that.label.centroid(d)[0] + "," + that.label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180 / Math.PI) + ")";
+                                })
+                                .style("font-size", that.radius / 10);
+                        }catch (e) {
+                            console.log("SB le")
                         }
-                        that.radiusOver = that.diameter / 2;
-                        that.radius = that.radiusOver *.75;
-
-
-                        d3.select('#wholeG').attr("transform", "translate(" + that.diameter / 2 + "," + that.diameter / 2 + ")");
-
-                        that.path = d3.arc()
-                            .outerRadius(that.radius)
-                            .innerRadius(0);  //make != 0 for a donut chart
-
-                        that.pathOver = d3.arc()
-                            .outerRadius(that.radiusOver)
-                            .innerRadius(0);  //make != 0 for a donut chart
-
-                        that.label = d3.arc()
-                            .outerRadius(that.radius * 1 / 3)
-                            .innerRadius(that.radius);
-
-                        that.labelOver = d3.arc()
-                            .outerRadius(that.radiusOver * 1 / 3)
-                            .innerRadius(that.radiusOver);
-
-                        svg.selectAll('.slice') //for each slide use arc path generator to draw the pie
-                            .attr("d", that.path)
-
-                        that.arc.selectAll(".text")  //for each slide use label path generator to place the text
-                            .attr("transform", function (d) {
-                                var midAngle = d.endAngle < Math.PI ? d.startAngle / 2 + d.endAngle / 2 : d.startAngle / 2 + d.endAngle / 2 + Math.PI;
-                                return "translate(" + that.label.centroid(d)[0] + "," + that.label.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180 / Math.PI) + ")";
-                            })
-                            .style("font-size", that.radius / 10);
                     }
 
                     d3.select(window).on('resize', resize);

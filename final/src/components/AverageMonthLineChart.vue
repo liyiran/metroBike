@@ -286,50 +286,54 @@
                         .text("Bikes per Station");
 
                     function resize() {
-                        var width = parseInt(d3.select("#line").style("width")) - margin.left - margin.right,
-                            height = parseInt(d3.select("#line").style("height")) - margin.top - margin.bottom;
+                        try {
+                            var width = parseInt(d3.select("#line").style("width")) - margin.left - margin.right,
+                                height = parseInt(d3.select("#line").style("height")) - margin.top - margin.bottom;
 
 
-                        // Update the range of the scale with new width/height
-                        xScale.range([0, width]);
-                        yScale.range([height, 0]);
+                            // Update the range of the scale with new width/height
+                            xScale.range([0, width]);
+                            yScale.range([height, 0]);
 
-                        // Update the axis and text with the new scale
-                        svg.select('.x.axis')
-                            .attr("transform", "translate(0," + height + ")")
-                            .call(xAxis);
+                            // Update the axis and text with the new scale
+                            svg.select('.x.axis')
+                                .attr("transform", "translate(0," + height + ")")
+                                .call(xAxis);
 
 
-                        svg.select('.y.axis')
-                            .call(yAxis);
+                            svg.select('.y.axis')
+                                .call(yAxis);
 
-                        // Force D3 to recalculate and update the line
-                        svg.selectAll('.line')
-                            .attr("d", function (d) {
-                                return line(d.values);
-                            });
+                            // Force D3 to recalculate and update the line
+                            svg.selectAll('.line')
+                                .attr("d", function (d) {
+                                    return line(d.values);
+                                });
 
-                        svg.selectAll('.circle')
-                            .attr("cx", function (d) {
-                                return xScale(d.date)
-                            })
-                            .attr("cy", function (d) {
-                                return yScale(d.amount)
-                            });
+                            svg.selectAll('.circle')
+                                .attr("cx", function (d) {
+                                    return xScale(d.date)
+                                })
+                                .attr("cy", function (d) {
+                                    return yScale(d.amount)
+                                });
 
-                        d3.selectAll(".circle-text")
-                            .attr("x", function (d) {
-                                return xScale(d.date);
-                            })
-                            .attr("y", function (d) {
-                                return yScale(d.amount) - 10;
-                            });
+                            d3.selectAll(".circle-text")
+                                .attr("x", function (d) {
+                                    return xScale(d.date);
+                                })
+                                .attr("y", function (d) {
+                                    return yScale(d.amount) - 10;
+                                });
 
-                        svg.selectAll('.legend')
-                            .attr("transform", "translate(" + (width + 60) + ",0)");
+                            svg.selectAll('.legend')
+                                .attr("transform", "translate(" + (width + 60) + ",0)");
 
-                        // Update the tick marks
-                        // yAxis.ticks(Math.max(height/50, 2));
+                            // Update the tick marks
+                            // yAxis.ticks(Math.max(height/50, 2));
+                        }catch (e) {
+                            console.log("SB le")
+                        }
                     }
 
                     // Call the resize function whenever a resize event occurs
