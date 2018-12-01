@@ -113,10 +113,56 @@
                     });
                 });
 
+            },
+            drawLegend(){
+                var svg = d3.select("#ca"); 
+
+                var legend = svg.append('g')
+                    .attr("transform","translate(70,300)"); 
+                
+                var rectWidth = 150,
+                    rectHeight = 80;
+                    
+                legend.append("rect")
+                        .attr("width", rectWidth)
+                        .attr("height", rectHeight)
+                        .attr("x","0")
+                        .attr("y","0")
+                        .attr("stroke","dimgrey")
+                        .attr("fill","white")
+                        .attr("opacity", 1);
+
+                var legendLabel = legend.append('g')
+                        .attr("transform","translate(0,20)")
+
+                    legendLabel.append("circle")
+                        .attr("transform","translate(20,10)")
+                        .attr("r", 2)
+                        .attr("fill", "red")
+                        .attr("opacity", 0.9);
+                    legendLabel.append("text")
+                        .attr("transform","translate(40,10)")
+                        .attr("alignment-baseline", "middle")
+                        .attr("font-size", 12)
+                        .text("Metro Bike Station");
+                    
+                    legendLabel.append("line")
+                        .attr("transform","translate(10,35)")
+                        .attr("x1","0")
+                        .attr("x2","20")
+                        .attr("y1","0")
+                        .attr("y2","0")
+                        .attr("stroke","blue");
+                    legendLabel.append("text")
+                        .attr("transform","translate(40,35)")
+                        .attr("alignment-baseline", "middle")
+                        .attr("font-size", 12)
+                        .text("Bus Line");
             }
         },
         mounted: function () {
             this.draw();
+            this.drawLegend();
         }
     }
 </script>

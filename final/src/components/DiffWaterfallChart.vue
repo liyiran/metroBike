@@ -29,7 +29,7 @@
             var margin = {
                 top: 20,
                 right: 20,
-                bottom: 30,
+                bottom: 40,
                 left: 40
             };
             var colorScale = d3.scaleSequential(d3.interpolateRdYlBu);
@@ -65,9 +65,24 @@
                     .attr("transform", "translate(0," + this.height + ")")
                     .call(this.xAxis);
 
+                svg.append('text')
+                    .attr("x", this.width / 2)
+                    .attr("y", this.height + 30)
+                    .attr("text-anchor", "middle")
+                    .attr('font-size', 11)
+                    .text("Days in a Month");
+
                 var yAxisHandleForUpdate = svg.append("g")
                     .attr("class", "axis axis--y")
                     .call(this.yAxis);
+
+                svg.append('text')
+                    .attr("x", - 95)
+                    .attr("y", - 30)
+                    .attr("transform", "rotate(-90)")
+                    .attr('font-size', 11)
+                    .text("Average Difference");
+
                 yAxisHandleForUpdate.append("text")
                     .attr("transform", "rotate(-90)")
                     .attr("y", 6)
