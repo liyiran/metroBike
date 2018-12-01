@@ -15,10 +15,10 @@
                 <a class="navbar-brand">
                     <img src="./assets/logo.png" height="30">
                 </a>
-                <router-link class="nav-item nav-link"  to="/">Index</router-link>
-                <router-link class="nav-item nav-link"  to="/general">General</router-link>
-                <router-link class="nav-item nav-link"  to="/region">Region</router-link>
-                <router-link class="nav-item nav-link"  to="/team">Team</router-link>
+                <router-link class="nav-item nav-link"  to="/" style="color:white">Home</router-link>
+                <router-link class="nav-item nav-link"  to="/general" style="color:white">General</router-link>
+                <router-link class="nav-item nav-link"  to="/region" style="color:white">Region</router-link>
+                <router-link class="nav-item nav-link"  to="/team" style="color:white">Team</router-link>
             </div>
         </nav>
         <div>
