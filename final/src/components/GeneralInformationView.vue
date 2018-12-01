@@ -3,7 +3,12 @@
        <div class="container" >
            <br/>                
             <h3 class="display-4" style="text-align:center">L.A. Metro Bike Station Distribution</h3>
-            
+            <ul>
+                <li>This map portraits the metro bike station distribution, bus lines, and business activities.</li>
+                <li>Each red dot is a bike station where you can borrow or return a bike.</li>
+                <li>The blue lines are bus lines.</li>
+                <li>The color on the map indicates number of shopping malls in this area. The darker the color the more shopping mall. White area means the data is missing</li>
+            </ul>
             <br/>
            <StationD3DotMap/>
        </div>

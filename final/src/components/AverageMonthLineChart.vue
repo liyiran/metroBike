@@ -4,8 +4,7 @@
         <div class="row">
             <div class="col">
                 <!-- <p class="alert alert-info">Move your mouse on the lines to see more details.</p> -->
-                <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div class="alert alert-info">
                     Moving mouse over the lines to see more details.
                 </div>
             </div>

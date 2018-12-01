@@ -7,8 +7,7 @@
             The blue lines are bus lines.
         </p> -->
         <!-- <p class="alert alert-info">Move your mouse on the dot to see more details.</p> -->
-        <div class="alert alert-info alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div class="alert alert-info">
             Moving mouse over red dots to see more details.
         </div>
         <div class="row">

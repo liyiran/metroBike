@@ -1,6 +1,10 @@
 <template>
     <div class="container-fluid">
-        <p class="alert alert-primary">&#8593;Click the menu to see more information&#8593;</p>
+        <br/>
+        <div class="alert alert-info">
+            &#8593;Click the menu to see more information&#8593;
+        </div>
+        <!-- <p class="alert alert-primary">&#8593;Click the menu to see more information&#8593;</p> -->
         <div class="fl-row fl-row-fixed-width fl-row-bg-none fl-node-5728f3dbceccf" data-node="5728f3dbceccf">
             <div class="fl-row-content-wrap">
                 <div class="fl-row-content fl-row-fixed-width fl-node-content">
@@ -10,7 +14,7 @@
                                 <div class="fl-module fl-module-rich-text fl-node-5728f3dbd486d" data-node="5728f3dbd486d">
                                     <div class="fl-module-content fl-node-content">
                                         <div class="fl-rich-text">
-                                            <h3>About the Assignment</h3>
+                                            <h3 class="display-4" style="text-align:center">About the Assignment</h3>
                                             <p>This project is for making a website which can show the usage of metro bike. There will be two parts in the website. 
                                             One part is the general information contains the borrow and return rate for all 4 areas and the other part is focusing on details for one chosen station.</p>
                                             <p>The Metro Bike Share system features approximately 1,400 bikes available 24/7, 365 days a year in Downtown LA, Port of LA and Venice. 

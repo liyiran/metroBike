@@ -7,8 +7,7 @@
                     This graph portraits accumulative bike usage against region. You can find that Venice is even more popular than DTLA although it is an new area.
                     Please notice that only DTLA has all data for all months.
                 </p> -->
-                <div class="alert alert-info alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div class="alert alert-info">
                     Moving mouse over the slices to see more details.
                 </div>
             </div>
