@@ -1,13 +1,24 @@
 <template>
     <div>
-        <h3>Count By Hour For Each Start Station</h3>
-                <p class="alert alert-primary">This graph shows the relationship between time and bike borrow amount.</p>
+        <!-- <h3>Count By Hour For Each Start Station</h3>
+                <p class="alert alert-primary">This graph shows the relationship between time and bike borrow amount.</p> -->
         <div class="container-fluid">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-12" id="legend-startbar">
                     <svg id="LegendStartbar"></svg>
                 </div> 
-            </div>
+            </div> -->
+            <div class="row">      
+                    <div class="col">
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" >
+                                <button type="button" class="btn btn-light" style="display: block; visibility: hidden">Regions</button>
+                                <button type="button" class="btn btn-light" style="display: block; visibility: hidden">DTLA</button>
+                                <button type="button" class="btn btn-light" style="display: block; visibility: hidden">Pasadena</button>
+                                <button type="button" class="btn btn-light" style="display: block; visibility: hidden">PortOfLA</button>
+                                <button type="button" class="btn btn-light" style="display: block; visibility: hidden">Venice</button>
+                        </div>
+                    </div>
+                </div>
             <div class="row">
                 <div class="col-12" id="chart-startbar">
                     <svg id="StartStationHourCount"></svg>
@@ -31,9 +42,9 @@
                 , "16", "17", "18", "19", "20", "21", "22", "23"];
             // Define dimensions
             var margin = {
-                top: 20,
+                top: 40,
                 right: 20,
-                bottom: 40,
+                bottom: 35,
                 left: 40
             };
             var colorScale = d3.scaleSequential(d3.interpolateCool).domain([-335, 2008]);
@@ -70,6 +81,7 @@
                     .call(this.xAxis);
 
                 canvas.append('text')
+                    .attr('id', 'xAxis-title-startbar')
                     .attr("x", this.width / 2)
                     .attr("y", this.height + 30)
                     .attr("text-anchor", "middle")
@@ -93,6 +105,14 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Amount");
+                
+                canvas.append('text')
+                    .attr('id', 'title-startbar')
+                    .attr("x", this.width / 2)
+                    .attr("y", - 5)
+                    .attr("text-anchor", "middle")
+                    .attr('font-size', 20)
+                    .text("Borrow");
 
                 // var legend = d3.select('#legend-startbar')
                 //     .attr('width', 500)
@@ -102,8 +122,19 @@
                 // legend.append('g')
                 //     .attr('id', 'axis-color')
                 //     .call(colorAxis);
-                
-                
+                //------------------------------
+                // canvas.append("g")
+                //     .attr("id", "legendLinear-startbar")
+                //     .attr("transform", "translate(20,20)");
+
+                // var legendLinear = d3.legendColor()
+                //     .shapeWidth(30)
+                //     .cells(10)
+                //     .orient('horizontal')
+                //     .scale(this.colorScale);
+
+                // canvas.select("#legendLinear-startbar")
+                //     .call(legendLinear);  
 
                 var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
@@ -168,7 +199,7 @@
                         
                         d3.select('#tooltip-startbar')
                             .style('left', xPosition + 'px')
-                            .style('top', (yPosition + 200) + 'px')
+                            .style('top', (yPosition) + 'px')
                             .select('#startbar-info')
                             .html('<b>' + that.hourFields[i] + ':00 - ' + that.hourFields[i] + ':59</b> <br/>' + 'Borrowing Amount: ' + d + ' <br/>');
 
@@ -195,13 +226,17 @@
                 graph.select('.axis--x')
                     .attr('transform', 'translate(0,' + this.height + ')')
                     .call(this.xAxis);
-                graph.select('.xLabel')
-                    .attr('x', width / 2);
+                // graph.select('.xLabel')
+                //     .attr('x', width / 2);
                 graph.selectAll('.bar-start')
                     .data(this.current)
                     .attr('x', function (d, i) { return that.xScale(that.hourFields[i]); })
                     .attr('y', function (d) { return that.yScale(d); })
                     .attr('width', this.xScale.bandwidth());
+                graph.select('#xAxis-title-startbar')
+                    .attr('x', width / 2);
+                graph.select('#title-startbar')
+                    .attr('x', width / 2);
             }
         },
 

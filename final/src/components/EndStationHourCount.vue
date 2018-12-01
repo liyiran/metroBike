@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h3>Count By Hour For Each Return Station</h3>
+        <!-- <h3>Count By Hour For Each Return Station</h3> -->
         <div class="container-fluid">
             <div class="row">
-                <p class="alert alert-primary">This graph shows the relationship between time and bike returning amount.</p>
+                <!-- <p class="alert alert-primary">This graph shows the relationship between time and bike returning amount.</p> -->
                 <div class="col-12" id="chart">
                     <svg id="EndStationHourCount"></svg>
                 </div> 
@@ -26,9 +26,9 @@
                 , "16", "17", "18", "19", "20", "21", "22", "23"];
             // Define dimensions
             var margin = {
-                top: 20,
+                top: 40,
                 right: 20,
-                bottom: 40,
+                bottom: 35,
                 left: 40
             };
             var colorScale = d3.scaleSequential(d3.interpolateWarm).domain([-492, 2952]);
@@ -65,6 +65,7 @@
                     .call(this.xAxis);
 
                 canvas.append('text')
+                    .attr('id', 'xAxis-title-endbar')
                     .attr("x", this.width / 2)
                     .attr("y", this.height + 30)
                     .attr("text-anchor", "middle")
@@ -88,6 +89,14 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Amount");
+                
+                canvas.append('text')
+                    .attr('id', 'title-endbar')
+                    .attr("x", this.width / 2)
+                    .attr("y", -5)
+                    .attr("text-anchor", "middle")
+                    .attr('font-size', 20)
+                    .text("Return");
 
                 var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
@@ -150,7 +159,7 @@
                         
                         d3.select('#tooltip-endbar')
                             .style('left', xPosition + 'px')
-                            .style('top', (yPosition + 60) + 'px')
+                            .style('top', (yPosition- 50) + 'px')
                             // .style("left", (d3.event.pageX) + "px")
                             // .style("top", (d3.event.pageY - 757) + "px")
                             .select('#endbar-info')
@@ -179,7 +188,9 @@
                 graph.select('.axis--x')
                     .attr('transform', 'translate(0,' + this.height + ')')
                     .call(this.xAxis);
-                graph.select('.xLabel')
+                graph.select('#xAxis-title-endbar')
+                    .attr('x', width / 2);
+                graph.select('#title-endbar')
                     .attr('x', width / 2);
                 graph.selectAll('.bar-end')
                     .data(this.current)

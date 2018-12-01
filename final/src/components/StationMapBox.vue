@@ -1,11 +1,10 @@
 <template>
     <div>
-        <h3>Bike station distribution in Mapbox and D3</h3>
         <div class="row">
             <div class="col">
                 <div class="row">      
                     <div class="col">
-                        <p class="alert alert-info">Click a button, Fly to that area</p>
+                        <!-- <p class="alert alert-info">Click a button, Fly to that area</p> -->
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                 <button type="button" class="btn btn-primary" v-on:click="AllRegions()">All Regions</button>
                                 <button type="button" class="btn btn-secondary" v-on:click="DTLA()">DTLA</button>
@@ -17,7 +16,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <p class="alert alert-info">Click a station, See details.</p>
+                        <!-- <p class="alert alert-info">Click a station, See details.</p> -->
                         <div id="wrapper">
                             <div id='map' style='width: 100%; height: 600px;'></div>
                         </div>
@@ -158,7 +157,7 @@
                                     // .style("left", (project([object.lon, object.lat]).x) )
                                     // .style("top", (project([object.lon, object.lat]).y))
                                     .style("left", (d3.event.pageX) + "px")
-                                    .style("top", (d3.event.pageY - 757) + "px")
+                                    .style("top", (d3.event.pageY - 1100) + "px")
                                     .select('#mapbox-info')
                                     .html(
                                         '<b>Station ID:</b> ' + object.Station_ID +

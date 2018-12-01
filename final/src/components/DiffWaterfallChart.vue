@@ -1,10 +1,11 @@
 <template>
     <div>
-        <h3>Count Difference for Borrow and Return by Day</h3>
+        <br/>
+        <!-- <h3>Count Difference for Borrow and Return by Day</h3> -->
         <div class="container-fluid">
             <div class="row">
-                <p class="alert alert-primary">This graph shows the difference between borrow and return rate. 
-                    If a station has too many borrow rate but too little return rate, the compnay has to use a truck to carry bikes from other stations and fill this station.</p>
+                <!-- <p class="alert alert-primary">This graph shows the difference between borrow and return rate. 
+                    If a station has too many borrow rate but too little return rate, the compnay has to use a truck to carry bikes from other stations and fill this station.</p> -->
                 <div class="col-12" id="chart-waterfall">
                     <svg id="waterfall">
                     </svg>
@@ -27,14 +28,14 @@
                 "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
             // Define dimensions
             var margin = {
-                top: 20,
-                right: 20,
+                top: 40,
+                right: 30,
                 bottom: 40,
                 left: 40
             };
             var colorScale = d3.scaleSequential(d3.interpolateRdYlBu);
             var width = window.innerWidth *0.95 - margin.left - margin.right;
-            var height = 400 - margin.top - margin.bottom;
+            var height = 300 - margin.top - margin.bottom;
             var xScale = d3.scaleBand().domain(dayFields).rangeRound([0, width]).padding(0.1);
             var yScale = d3.scaleLinear().rangeRound([height, 0]);
             var xAxis = d3.axisBottom(xScale).tickFormat(d3.format("d"));
@@ -66,6 +67,7 @@
                     .call(this.xAxis);
 
                 svg.append('text')
+                    .attr('id', 'xAxis-title-dif')
                     .attr("x", this.width / 2)
                     .attr("y", this.height + 30)
                     .attr("text-anchor", "middle")
@@ -89,6 +91,15 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Difference");
+
+                svg.append('text')
+                    .attr('id', 'title-dif')
+                    .attr("x", this.width / 2)
+                    .attr("y", - 10)
+                    .attr("text-anchor", "middle")
+                    .attr('font-size', 20)
+                    .text("Borrowing-Returning Difference");
+
                 var that = this;
 
                 var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -191,7 +202,7 @@
                         
                         d3.select('#tooltip-dif')
                             .style('left', xPosition + 'px')
-                            .style('top', (yPosition + 100) + 'px')
+                            .style('top', (yPosition) + 'px')
                             // .style("left", (d3.event.pageX) + "px")
                             // .style("top", (d3.event.pageY - 757) + "px")
                             .select('#dif-info')
@@ -221,7 +232,9 @@
                 graph.select('.axis--x')
                     .attr('transform', 'translate(0,' + this.height + ')')
                     .call(this.xAxis);
-                graph.select('.xLabel')
+                graph.select('#xAxis-title-dif')
+                    .attr('x', width / 2);
+                graph.select('#title-dif')
                     .attr('x', width / 2);
                 graph.selectAll('.bar')
                     .data(this.current)
