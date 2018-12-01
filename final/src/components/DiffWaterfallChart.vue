@@ -223,6 +223,7 @@
                     })
             },
             onResize(event) {
+                try{
                 var that = this;
                 var width = parseInt(d3.select('#chart-waterfall').property('clientWidth')) - this.margin.left - this.margin.right;
                 // console.log(d3.select('#chart-waterfall').property('clientWidth'));
@@ -247,7 +248,10 @@
                             return that.yScale(d);
                         }
                     })
-                    .attr('width', this.xScale.bandwidth());
+                    .attr('width', this.xScale.bandwidth());   }
+                    catch (e) {
+                        console.log("SB le")
+                    }
             }
         },
         mounted: function () {
@@ -263,13 +267,8 @@
                     });
                 });
                 that.initChart(stationData);
+                window.addEventListener('resize', that.onResize);
             });
-        } ,
-        ready: function () {
-            window.addEventListener('resize', this.onResize);
-        },
-        beforeDestroy: function () {
-            window.removeEventListener('resize', this.onResize)
         }
     }
 

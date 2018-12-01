@@ -25,9 +25,6 @@
             AverageMonthLineChart,
             CountByRegion
         },
-        // mounted: function () {
-        //     AOS.init()
-        // }
     }
    
 </script>

@@ -218,25 +218,33 @@
                     })
             },
             onResize(event) {
-                var that = this;
-                var width = parseInt(d3.select('#chart-startbar').property('clientWidth')) - this.margin.left - this.margin.right;
-                this.xScale.range([0, width]);
-                var graph = d3.select('#StartStationHourCount');
-                graph.attr('width', width + 50);
-                graph.select('.axis--x')
-                    .attr('transform', 'translate(0,' + this.height + ')')
-                    .call(this.xAxis);
-                // graph.select('.xLabel')
-                //     .attr('x', width / 2);
-                graph.selectAll('.bar-start')
-                    .data(this.current)
-                    .attr('x', function (d, i) { return that.xScale(that.hourFields[i]); })
-                    .attr('y', function (d) { return that.yScale(d); })
-                    .attr('width', this.xScale.bandwidth());
-                graph.select('#xAxis-title-startbar')
-                    .attr('x', width / 2);
-                graph.select('#title-startbar')
-                    .attr('x', width / 2);
+                try {
+                    var that = this;
+                    var width = parseInt(d3.select('#chart-startbar').property('clientWidth')) - this.margin.left - this.margin.right;
+                    this.xScale.range([0, width]);
+                    var graph = d3.select('#StartStationHourCount');
+                    graph.attr('width', width + 50);
+                    graph.select('.axis--x')
+                        .attr('transform', 'translate(0,' + this.height + ')')
+                        .call(this.xAxis);
+                    // graph.select('.xLabel')
+                    //     .attr('x', width / 2);
+                    graph.selectAll('.bar-start')
+                        .data(this.current)
+                        .attr('x', function (d, i) {
+                            return that.xScale(that.hourFields[i]);
+                        })
+                        .attr('y', function (d) {
+                            return that.yScale(d);
+                        })
+                        .attr('width', this.xScale.bandwidth());
+                    graph.select('#xAxis-title-startbar')
+                        .attr('x', width / 2);
+                    graph.select('#title-startbar')
+                        .attr('x', width / 2);
+                }catch (e) {
+                    console.log("SB le")
+                }
             }
         },
 
@@ -253,15 +261,9 @@
                     });
                 });
                 that.initChart(stationData);
-                
+                window.addEventListener('resize', that.onResize);
             });
 
-        },
-        ready: function () {
-            window.addEventListener('resize', this.onResize);
-        },
-        beforeDestroy: function () {
-            window.removeEventListener('resize', this.onResize);
         }
     }
 </script>

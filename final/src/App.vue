@@ -17,6 +17,7 @@
                 <a class="navbar-brand">
                     <img src="./assets/logo.png" height="30">
                 </a>
+                <router-link class="nav-item nav-link"  to="/">Index</router-link>
                 <router-link class="nav-item nav-link"  to="/general">General</router-link>
                 <router-link class="nav-item nav-link"  to="/region">Region</router-link>
             </div>
