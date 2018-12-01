@@ -39,7 +39,7 @@
                         ;
                     d3.json("./la-county-regions-current.geojson").then(function (caJson) {
 
-                        var projection = d3.geoMercator().center([-117.843683, 33.952235]).scale(40000);
+                        var projection = d3.geoMercator().center([-118.353683, 33.952235]).scale(40000);
                         window.addEventListener('resize', function () {
                             projection.center([-118.243683, 33.952235]);
                         });
@@ -62,7 +62,10 @@
                                 }
                             })
                             .attr("stroke", "dimgrey")
-                            .attr("d", path);  //generate geographic path
+                            .attr("d", path)
+                            .attr('name',function(d) {
+                                return d.properties.name
+                            });  //generate geographic path
                         d3.csv("./station_lat.csv").then(function (data) {
                             var div = d3.select("body").append("div")
                                 .attr("class", "tooltip")

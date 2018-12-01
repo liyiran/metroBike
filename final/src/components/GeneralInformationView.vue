@@ -1,12 +1,12 @@
 <template>
    <div>
-       <div class="container" data-aos="flip-left">
+       <div class="container" >
            <StationD3DotMap/>
        </div>
-       <div class="container" data-aos="flip-left">
+       <div class="container" >
            <AverageMonthLineChart/>
        </div>
-       <div class="container" data-aos="flip-left">
+       <div class="container" >
            <CountByRegion/>
        </div>
    </div>
@@ -16,8 +16,8 @@
     import StationD3DotMap from './StationD3DotMap'
     import AverageMonthLineChart from './AverageMonthLineChart'
     import CountByRegion from './CountByRegion'
-    import AOS from 'aos'
-    import 'aos/dist/aos.css'
+    // import AOS from 'aos'
+    // import 'aos/dist/aos.css'
     export default {
         name: "GeneralInformationView",
         components: {
@@ -25,9 +25,9 @@
             AverageMonthLineChart,
             CountByRegion
         },
-        mounted: function () {
-            AOS.init()
-        }
+        // mounted: function () {
+        //     AOS.init()
+        // }
     }
    
 </script>
