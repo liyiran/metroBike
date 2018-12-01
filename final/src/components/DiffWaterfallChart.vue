@@ -250,7 +250,6 @@
                     });
                 });
                 that.initChart(stationData);
-                window.addEventListener('resize', that.onResize);
             });
         } ,
         ready: function () {
