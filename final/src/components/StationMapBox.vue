@@ -223,7 +223,13 @@
         },
         mounted: function () {
             this.drawMap();
+            // window.addEventListener('resize', this.onResize)
+        },
+        ready: function () {
             window.addEventListener('resize', this.onResize)
+        },
+        beforeDestroy: function () {
+            window.removeEventListener('resize', this.onResize)
         }
     }
 </script>
