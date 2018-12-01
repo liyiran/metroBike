@@ -214,21 +214,19 @@
 
             },
             onResize(event) {
+                try{
                 var mapCanvas = document.getElementsByClassName('mapboxgl-canvas')[0];
                 var mapDiv = document.getElementById('map');
                 mapDiv.style.width = '100%';
-                mapCanvas.style.width = '100%';
+                mapCanvas.style.width = '100%';}
+                catch (e) {
+                    console.log("SB le")
+                }
             }
         },
         mounted: function () {
             this.drawMap();
-            // window.addEventListener('resize', this.onResize)
-        },
-        ready: function () {
             window.addEventListener('resize', this.onResize)
-        },
-        beforeDestroy: function () {
-            window.removeEventListener('resize', this.onResize)
         }
     }
 </script>

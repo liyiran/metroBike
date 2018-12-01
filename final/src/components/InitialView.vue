@@ -27,10 +27,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="fl-col fl-node-5728f4406d613 fl-col-small" data-node="5728f4406d613">
-                            <div class="fl-col-content fl-node-content">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

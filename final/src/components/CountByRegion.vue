@@ -250,8 +250,6 @@
         },
         mounted: function () {
             this.initChart();
-            var that = this;
-
         }
     }
 </script>

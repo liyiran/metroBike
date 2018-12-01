@@ -6,7 +6,7 @@
                 <!-- <p class="alert alert-primary">This graph shows the relationship between time and bike returning amount.</p> -->
                 <div class="col-12" id="chart">
                     <svg id="EndStationHourCount"></svg>
-                </div> 
+                </div>
             </div>
         </div>
         <div id="tooltip-endbar" class="hidden">
@@ -48,7 +48,7 @@
                 yScale: yScale,
                 xAxis: xAxis,
                 yAxis: yAxis,
-                current:[]
+                current: []
             }
         },
         methods: {
@@ -77,7 +77,7 @@
                     .call(this.yAxis)
 
                 canvas.append('text')
-                    .attr("x", - 95)
+                    .attr("x", -95)
                     .attr("y", 15)
                     .attr("transform", "rotate(-90)")
                     .attr('font-size', 11)
@@ -89,7 +89,7 @@
                     .attr("dy", "0.71em")
                     .attr("text-anchor", "end")
                     .text("Amount");
-                
+
                 canvas.append('text')
                     .attr('id', 'title-endbar')
                     .attr("x", this.width / 2)
@@ -98,7 +98,7 @@
                     .attr('font-size', 20)
                     .text("Return");
 
-                var default_data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                var default_data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
                 var default_bars = canvas.selectAll(".bar-end").data(default_data);
                 // Add default bars 
@@ -117,7 +117,7 @@
                     })
                     .attr("fill", function (d) {
                         return that.colorScale(d);
-                    }); 
+                    });
 
                 this.$root.$on('change-station', (newStation) => {
                     that.updateChart(stationData[newStation], yAxisHandleForUpdate, canvas);
@@ -130,7 +130,7 @@
                 this.yScale.domain([0, d3.max(d)]);
                 yAxisHandleForUpdate.transition()
                     .duration(750)
-                    .call(this.yAxis); 
+                    .call(this.yAxis);
 
                 var bars = d3.selectAll('.bar-end')
                     .data(d)
@@ -149,24 +149,24 @@
                     .duration(750)
                     .style("fill", function (d) {
                         return that.colorScale(d);
-                    }); 
+                    });
 
                 d3.selectAll('.bar-end')
                     .on("mouseover", function (d, i) {
                         d3.select(this).style("fill", "black");
                         var xPosition = parseFloat(d3.mouse(this)[0]);
                         var yPosition = parseFloat(d3.mouse(this)[1]);
-                        
+
                         d3.select('#tooltip-endbar')
                             .style('left', xPosition + 'px')
-                            .style('top', (yPosition- 50) + 'px')
+                            .style('top', (yPosition - 50) + 'px')
                             // .style("left", (d3.event.pageX) + "px")
                             // .style("top", (d3.event.pageY - 757) + "px")
                             .select('#endbar-info')
                             .html('<b>' + that.hourFields[i] + ':00 - ' + that.hourFields[i] + ':59</b> <br/>' + 'Returning Amount: ' + d + ' <br/>');
 
                         d3.select('#tooltip-endbar')
-                        .classed('hidden', false) 
+                            .classed('hidden', false)
                     })
                     .on("mouseout", function () {
                         d3.select(this)
@@ -176,27 +176,35 @@
                                 return that.colorScale(d);
                             });
                         d3.select('#tooltip-endbar')
-                        .classed('hidden', true);
+                            .classed('hidden', true);
                     })
             },
             onResize(event) {
-                var that = this;
-                var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
-                this.xScale.range([0, width]);
-                var graph = d3.select('#EndStationHourCount');
-                graph.attr('width', width + 50);
-                graph.select('.axis--x')
-                    .attr('transform', 'translate(0,' + this.height + ')')
-                    .call(this.xAxis);
-                graph.select('#xAxis-title-endbar')
-                    .attr('x', width / 2);
-                graph.select('#title-endbar')
-                    .attr('x', width / 2);
-                graph.selectAll('.bar-end')
-                    .data(this.current)
-                    .attr('x', function (d, i) { return that.xScale(that.hourFields[i]); })
-                    .attr('y', function (d) { return that.yScale(d); })
-                    .attr('width', this.xScale.bandwidth());
+                try {
+                    var that = this;
+                    var width = parseInt(d3.select('#chart').property('clientWidth')) - this.margin.left - this.margin.right;
+                    this.xScale.range([0, width]);
+                    var graph = d3.select('#EndStationHourCount');
+                    graph.attr('width', width + 50);
+                    graph.select('.axis--x')
+                        .attr('transform', 'translate(0,' + this.height + ')')
+                        .call(this.xAxis);
+                    graph.select('#xAxis-title-endbar')
+                        .attr('x', width / 2);
+                    graph.select('#title-endbar')
+                        .attr('x', width / 2);
+                    graph.selectAll('.bar-end')
+                        .data(this.current)
+                        .attr('x', function (d, i) {
+                            return that.xScale(that.hourFields[i]);
+                        })
+                        .attr('y', function (d) {
+                            return that.yScale(d);
+                        })
+                        .attr('width', this.xScale.bandwidth());
+                }catch (e) {
+                    console.log("SB le");
+                }
             }
         },
 
@@ -213,14 +221,9 @@
                     });
                 });
                 that.initChart(stationData);
-               
+                window.addEventListener('resize', that.onResize);
             });
-        } ,ready: function () {
-            window.addEventListener('resize', this.onResize);
-        },
-        beforeDestroy: function () {
-            window.removeEventListener('resize', this.onResize);
-        }
+        } 
     }
 </script>
 
@@ -239,6 +242,7 @@
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
         pointer-events: none;
     }
+
     #tooltip-endbar.hidden {
         display: none;
     }

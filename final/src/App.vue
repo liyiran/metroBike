@@ -3,11 +3,9 @@
         <div id="section1" class="container-fluid">
             <div class="container" style="margin-top: 2%;">
                 <div class="row">
-                    <div class="col-lg-10 mx-auto">
-                        <p>Metro bike usage research</p>
-                        <p align="center">Yiran Li</p>
-                        <p align="center">Yueqin Yang</p>
-                        <p align="center">Xiner Ning</p>
+                    <div class="col-lg-12 mx-auto">
+                        <p align="center">Metro Bike Usage Research</p>
+                        <p align="center">Team Eureka</p>
                     </div>
                 </div>
             </div>
@@ -17,8 +15,10 @@
                 <a class="navbar-brand">
                     <img src="./assets/logo.png" height="30">
                 </a>
+                <router-link class="nav-item nav-link"  to="/">Index</router-link>
                 <router-link class="nav-item nav-link"  to="/general">General</router-link>
                 <router-link class="nav-item nav-link"  to="/region">Region</router-link>
+                <router-link class="nav-item nav-link"  to="/team">Team</router-link>
             </div>
         </nav>
         <div>
